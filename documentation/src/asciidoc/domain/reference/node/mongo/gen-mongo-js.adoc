@@ -1,0 +1,610 @@
+= Generating Mongoose Mapping
+
+== Introduction
+
+Mongoose provides a schema based approach to modeling data for MongoDB and it is designed to work in asynchronous environments. (See http://mongoosejs.com/)You may generate Mongoose mapping from the domain model.
+This requires that you add a +node-mongo-options+ section to your domain model.
+
+== The +node-mongo-options+
+
+To generate Mongoose code you will have to add a +node-mongo-options+ to your domain model.
+This has to go to the top of the file.
+
+[source]
+--------
+domain-model YourDomainModelName {
+    node-mongo-options {            <1>
+        model-path "../models/"     <2>
+    }
+    //...
+}
+--------
+<1> The node-mongo-options section
+<2> Specify the location you want the model code to be generated in (relative to the code-gen location which by default is in ${PROJECT_ROOT}/src-gen, but it is possible to change the default by adjusting the project properties).
+
+== Understand the Mapping to MongoDB
+
+MongoDB is a document database. 
+This does cause some problems for us.
+Although the document databases are excellent for storing complex objects, they are not very good at storing object relationship (or associations).
+
+There are some probably quite obvious rules:
+
+* Each instance of an object is mapped to a document
+* The properties (even complex ones) are stored with the document
+
+The problem comes when we map relationships. There are two dimension to relationships:
+
+* Cardinality
+** One-to-one
+** One-to-many
+** Many-to-many
+* Directionality
+** Bidirectional
+** Unidirectional
+
+The cardinality is easily mapped as Mongo supports collections of properties.
+Hence, we can easily store a collection of document ids.
+
+For the many-to-many relationship, we had a couple of options:
+
+. Create a collection of document ids in documents on each side of the relationship.
+. Create a separate document to store the relationship (similar is typical in relational databases with mapping tables).
+
+We decided to go with the second option since that seemed to be the more typical mapping. 
+
+It is possible to instantiate the domain model using the first mapping instead.
+If you did decide to go with the second options, you would have to:
+
+. Define two relationships
+.. Either two associations or two references (we would recommend two references)
+.. A reference from type A to type B with the cardinality many
+.. A reference from type B to type A with the cardinality many
+. In code ensure that they were kept consistent
+
+Notice, that the option with two references do force you to change the domain model (and we would argue compromise its quality) and loose some of its semantics.
+
+== Example mappings
+
+=== Simple Example
+
+In this first example let's just create a simple entity.
+
+[cols="a,a", options="headers"]
+|===
+
+|Domain Model
+|Generated Code (in +${gen_root}/example/person.js+)
+
+|
+
+[source]
+-------------------------------------
+domain-model Example {
+    node-mongo-options {
+        model-path "example/"
+    }
+    entity Person {
+        String firstName!
+        String middleInitial?
+        String lastName!
+    }
+}
+-------------------------------------
+
+|
+
+[source, JavaScript]
+-------------------------------------
+var mongoose = require('mongoose');
+
+// Create the schema
+var Schema = mongoose.Schema;
+
+// Definition of the schema
+
+var personSchema = new Schema({
+  firstName : {
+    type : String,
+    required : true
+  },
+  middleInitial : {
+    type : String
+  },
+  lastName : {
+    type : String,
+    required : true
+  }
+}, {
+  collection : "persons"
+});
+
+// Compile the model
+var Person = mongoose.model('Person', personSchema);
+
+// Make the schema available
+exports.Person = Person;
+-------------------------------------
+
+|===
+
+If you are familiar with Mongoose, the mapping should be straight forward.
+Any service now wanting to manipulate or read the persistent documents for +Person+ can now simply require this file.
+
+=== Complex Object Example
+
+In this example, we'll add a complex type to the +Person+ entity (using Address).
+
+[cols="a,a", options="headers"]
+|===
+
+|*Domain Model*
+|*Generated Code* (in +${gen_root}/example/person.js+)
+
+|
+
+[source]
+-------------------------------------
+domain-model Example {
+    node-mongo-options {
+        model-path "example/"
+    }
+    type Address {
+        String street!
+        String city!
+        String zip!
+        String state!
+    }
+    entity Person {
+        String firstName!
+        String middleInitial?
+        String lastName!
+        Address mainAddress!
+        Address alternativeAddresses*
+    }
+}
+-------------------------------------
+
+|
+
+[source, JavaScript]
+-------------------------------------
+var mongoose = require('mongoose');
+
+// Create the schema
+var Schema = mongoose.Schema;
+
+// Definition of the schema
+
+var personSchema = new Schema({
+  firstName : {
+    type : String,
+    required : true
+  },
+  middleInitial : {
+    type : String
+  },
+  lastName : {
+    type : String,
+    required : true
+  },
+  mainAddress : {
+    street : {
+      type : String,
+      required : true
+    },
+    city : {
+      type : String,
+      required : true
+    },
+    zip : {
+      type : String,
+      required : true
+    },
+    state : {
+      type : String,
+      required : true
+    }
+  },
+  alternativeAddresses : [ new Schema({
+    street : {
+      type : String
+    },
+    city : {
+      type : String
+    },
+    zip : {
+      type : String
+    },
+    state : {
+      type : String
+    }
+  }) ]
+}, {
+  collection : "persons"
+});
+
+// Compile the model
+var Person = mongoose.model('Person', personSchema);
+
+// Make the schema available
+exports.Person = Person;
+-------------------------------------
+
+|===
+
+Notice how we _expanded_ the address type into nested structures.
+
+=== Simple Association
+
+Let's introduce one more type and create an association between them.
+
+[cols="a,a", options="headers"]
+|===
+
+|*Domain Model*
+|*Generated Code*
+
+|
+
+[source]
+-------------------------------------
+domain-model Example {
+    node-mongo-options {
+        model-path "example/"
+    }
+    type Address {
+        String street!
+        String city!
+        String zip!
+        String state!
+    }
+    entity Person {
+        String firstName!
+        String middleInitial?
+        String lastName!
+        Address mainAddress!
+        Address alternativeAddresses*
+    }
+    entity Car {
+        String name!
+    }
+    association CarOwnership {
+        Person owner!
+        <-->
+        Car cars*
+    }
+}
+-------------------------------------
+|
+
++In the file: ${gen_root}/example/person.js+
+
+[source, JavaScript]
+-------------------------------------
+var mongoose = require('mongoose');
+
+// Create the schema
+var Schema = mongoose.Schema;
+
+// Definition of the schema
+
+var personSchema = new Schema({
+  firstName : {
+    type : String,
+    required : true
+  },
+  middleInitial : {
+    type : String
+  },
+  lastName : {
+    type : String,
+    required : true
+  },
+  mainAddress : {
+    street : {
+      type : String,
+      required : true
+    },
+    city : {
+      type : String,
+      required : true
+    },
+    zip : {
+      type : String,
+      required : true
+    },
+    state : {
+      type : String,
+      required : true
+    }
+  },
+  alternativeAddresses : [ new Schema({
+    street : {
+      type : String
+    },
+    city : {
+      type : String
+    },
+    zip : {
+      type : String
+    },
+    state : {
+      type : String
+    }
+  }) ],
+  cars : {
+    type : [ Schema.Types.ObjectId ],
+    ref : 'Car'
+  }
+}, {
+  collection : "persons"
+});
+
+// Compile the model
+var Person = mongoose.model('Person', personSchema);
+
+// Make the schema available
+exports.Person = Person;
+-------------------------------------
+
++In the file: ${gen_root}/example/car.js+
+
+[source, JavaScript]
+-------------------------------------
+var mongoose = require('mongoose');
+
+// Create the schema
+var Schema = mongoose.Schema;
+
+// Definition of the schema
+
+var carSchema = new Schema({
+  name : {
+    type : String,
+    required : true
+  },
+  owner : {
+    type : Schema.Types.ObjectId,
+    ref : 'Person'
+  }
+}, {
+  collection : "cars"
+});
+
+// Compile the model
+var Car = mongoose.model('Car', carSchema);
+
+// Make the schema available
+exports.Car = Car;
+-------------------------------------
+
+|===
+
+Notice that we defined a bidirectional association.
+We therefore have a reference from the +Car+ document to the +Person+ document that defines its owner *AND* a collection of references in the +Person+ document that refers to the +Car+ documents.
+
+In databases with explicit constructs for _edges_ (aka relationship), we would not have to worry to much about the bi-directionality. 
+However, Mongo doesn't have any explicit constructs for _edges_. This means that as a programmer you have to ensure that the references are semantically correct.
+
+You have to take special care to ensure that when you set the reference on one side, you set the reference on the other side also.
+
+This get particularly tricky in modification of references. Say for instance that someone sells a car.
+To switch owners, we would have to update 3 documents:
+
+* The previous owner (remove the reference to the car)
+* The new owner (add the reference to the car)
+* The car (change the owner reference)
+
+=== Example of Many-2-Many Association
+
+Let's simply modify the previous domain model to allow for multiple owners.
+
+
+[cols="a,a", options="headers"]
+|===
+
+|*Domain Model*
+|*Generated Code*
+
+|
+
+[source]
+-------------------------------------
+domain-model Example {
+    node-mongo-options {
+        model-path "example/"
+    }
+    type Address {
+        String street!
+        String city!
+        String zip!
+        String state!
+    }
+    entity Person {
+        String firstName!
+        String middleInitial?
+        String lastName!
+        Address mainAddress!
+        Address alternativeAddresses*
+    }
+    entity Car {
+        String name!
+    }
+    association CarOwnership {
+        Person owners*
+        <-->
+        Car cars*               // <1>
+    }
+}
+-------------------------------------
+<1> Notice how we changed the association to be a many-2-many
+
+|
+
++In the file: ${gen_root}/example/person.js+
+
+[source, JavaScript]
+-------------------------------------
+var mongoose = require('mongoose');
+// Import all the entities
+require('./car'); // to ensure registered
+
+// Create the schema
+var Schema = mongoose.Schema;
+
+// Definition of the schema
+
+var personSchema = new Schema({ // <1>
+  firstName : {
+    type : String,
+    required : true
+  },
+  middleInitial : {
+    type : String
+  },
+  lastName : {
+    type : String,
+    required : true
+  },
+  mainAddress : {
+    street : {
+      type : String,
+      required : true
+    },
+    city : {
+      type : String,
+      required : true
+    },
+    zip : {
+      type : String,
+      required : true
+    },
+    state : {
+      type : String,
+      required : true
+    }
+  },
+  alternativeAddresses : [ new Schema({
+    street : {
+      type : String
+    },
+    city : {
+      type : String
+    },
+    zip : {
+      type : String
+    },
+    state : {
+      type : String
+    }
+  }) ]
+}, {
+  collection : "persons"
+});
+
+// Compile the model
+var Person = mongoose.model('Person', personSchema);
+
+// Make the schema available
+exports.Person = Person;
+-------------------------------------
+<1> Notice that there is no reference to the cars anymore in the Person
+
++In the file: ${gen_root}/example/car.js+
+
+[source, JavaScript]
+-------------------------------------
+var mongoose = require('mongoose');
+// Import all the entities
+require('./person'); // to ensure registered
+
+// Create the schema
+var Schema = mongoose.Schema;
+
+// Definition of the schema
+
+var carSchema = new Schema({ // <1>
+  name : {
+    type : String,
+    required : true
+  }
+}, {
+  collection : "cars"
+});
+
+// Compile the model
+var Car = mongoose.model('Car', carSchema);
+
+// Make the schema available
+exports.Car = Car;
+-------------------------------------
+<1> Notice that the reference to the owner is no longer here
+
++In the file: ${gen_root}/example/carOwnership.js+
+
+[source, JavaScript]
+-------------------------------------
+var mongoose = require('mongoose');
+
+// Create the schema
+var Schema = mongoose.Schema;
+// Definition of the schema
+
+var carOwnershipSchema = new Schema({ // <1>
+  owners : {
+    type : Schema.Types.ObjectId,
+    ref : 'Person'
+  },
+  cars : {
+    type : Schema.Types.ObjectId,
+    ref : 'Car'
+  }
+
+});
+
+// Compile the model
+var CarOwnership = mongoose.model('CarOwnership', carOwnershipSchema);
+
+// Make the schema available
+exports.CarOwnership = CarOwnership;
+-------------------------------------
+<1> We introduced a relationship document that holds the references
+
+|===
+
+What if you have a many to many relationship that you don't want mapped this way?
+
+You can always define two references as this:
+
+[source]
+-------------------------------------
+domain-model Example {
+    node-mongo-options {
+        model-path "example/"
+    }
+    type Address {
+        String street!
+        String city!
+        String zip!
+        String state!
+    }
+    entity Person {
+        String firstName!
+        String middleInitial?
+        String lastName!
+        Address mainAddress!
+        Address alternativeAddresses*
+        ref Car cars*           // <1>
+    }
+    entity Car {
+        String name!
+        ref Person owners*      // <2>
+    }
+}
+-------------------------------------
+<1> Introduced a reference from the +Person+ to the +Car+
+<2> Introduced a reference from the +Car+ to the +Person+
+
+This does compromise the model somewhat as there is now way to read the bi-directionality from the domain model.
+However, some good comments should go a long way rectifying this.

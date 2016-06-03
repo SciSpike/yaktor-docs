@@ -1,0 +1,136 @@
+= Roo Tutorial
+
+== Introduction
+
+This tutorial assumes that you already have Roo installed and working.
+See the http://projects.spring.io/spring-roo[Roo home page] for how to get Roo installed.
+
+== Create the Domain Model
+
+Below is a small domain model with a scool, some students and some registration.
+
+The project has been setup to use embedded derby and hibernate.
+
+[source]
+--------------------
+domain-model registration {
+    roo-gen-options {
+        project-options {
+            root-package com.scispike.test  // <1>
+            project-name test               // <2>
+        }
+        persistence-options {
+            database DERBY_EMBEDDED         // <3>
+            provider hibernate              // <4>
+        }
+    }
+    entity Student {
+        String firstName!
+        String middleInitial?
+        String lastName!
+        String ssn!
+    }
+    entity School {
+        String name!
+    }
+    entity Program {
+        String name!
+    }
+    entity Registration {
+        Date whenRequested!
+        Date whenAccepted?
+        Date whenRejected?
+    }
+    association Registration2Student {
+        Student student!
+        <-->
+        Registration registrations*
+    }
+    association School2Registration {
+        Program program!
+        <-->
+        Registration registrations*
+    }
+    association School2Program {
+        School school!
+        <-->
+        Program programs*
+    }
+}
+--------------------
+<1> Configure the root package for the project
+<2> Configure the project name
+<3> Configure the database type
+<4> Configure the JPA provider
+
+== Check the roo script
+
+As soon the domain model is saved, you should see a roo script in the +src-gen+ directory (unless you configured the project to put generated artifacts elsewhere).
+
+The generated script should have the name +registration.roo+ if you copied the sample model above.
+
+[source, roo]
+--------------------
+project --topLevelPackage com.scispike.test --projectName test
+jpa setup --database DERBY_EMBEDDED --provider HIBERNATE
+
+entity jpa --class ~.domain.Student
+field string --fieldName firstName --notNull
+field string --fieldName middleInitial
+field string --fieldName lastName --notNull
+field string --fieldName ssn --notNull
+
+entity jpa --class ~.domain.School
+field string --fieldName name --notNull
+
+entity jpa --class ~.domain.Program
+field string --fieldName name --notNull
+
+entity jpa --class ~.domain.Registration
+field date --fieldName whenRequested --notNull --type java.util.Date
+field date --fieldName whenAccepted --type java.util.Date
+field date --fieldName whenRejected --type java.util.Date
+
+focus --class ~.domain.Student
+field set --fieldName registrations --type ~.domain.Registration --cardinality ONE_TO_MANY --mappedBy student
+focus --class ~.domain.Registration
+field reference --fieldName student --notNull --type ~.domain.Student --cardinality MANY_TO_ONE
+focus --class ~.domain.Program
+field set --fieldName registrations --type ~.domain.Registration --cardinality ONE_TO_MANY --mappedBy program
+focus --class ~.domain.Registration
+field reference --fieldName program --notNull --type ~.domain.Program --cardinality MANY_TO_ONE
+focus --class ~.domain.School
+field set --fieldName programs --type ~.domain.Program --cardinality ONE_TO_MANY --mappedBy school
+focus --class ~.domain.Program
+field reference --fieldName school --notNull --type ~.domain.School --cardinality MANY_TO_ONE
+web mvc setup
+web mvc all --package ~.controller
+
+perform eclipse
+------------------
+
+== Run the Script
+
+You should now be able to run the script using the roo tool. 
+There are a couple a ways you could do this.
+
+Here is one example:
+
+[source, shell]
+$ roo < registration.roo
+
+You should now see the roo tool processing the script.
+
+== Run Maven to Start Jetty
+
+When it is finished, you can simply run a maven command to take a look at the result.
+
+[source, shell]
+$ mvn jetty:run
+
+== Launch Your Browser to Try the App
+
+Simply open the browser on:
+
+    http://localhost:8080/test
+

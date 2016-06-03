@@ -1,0 +1,56 @@
+= Yaktor Languages and Tools
+
+== Introduction
+
+This document describes some of the Yaktor tools used on our projects. This is the index file that points to the various documentation that we have produced.
+Hence, you may want to bookmark this page :)
+
+The documentation consists of two kinds of documents:
+
+* Reference documentation
+* Tutorials
+
+There are two tools that you would need to learn:
+
+* The domain modeling language
+* The conversation language
+
+The domain modeling language is used to define a canonical information model for the problem domain the project is solving.
+
+The conversation language is used to define the behavior of the application.
+
+== I'm A Newbie. What Do I Do?
+
+Here is a suggested learning path.
+
+First, do a quick scan of the key reference documentation.
+Even if you don't understand it all (yet), it should give you a good idea of what we are doing.
+
+. link:conversation/tutorials/GettingStarted.html[Just About Everything]
+. link:domain/reference/introduction.html[Learn the domain language]
+. link:conversation/reference/languageReference.html[Learn the conversation language]
+
+What to do next depends on your learning style.
+For those of you that like to learn through experimentation, perhaps it's time to do a bit of exploration using some of the tutorials.
+For those of you that like to start with a more theoretical foundation, perhaps a closer study of the reference documentation may be best.
+
+== List of Documents
+
+* Installation
+** link:conversation/tutorials/GettingStarted.html[Getting Started]
+* Domain Language
+** References
+*** link:domain/reference/introduction.html[Language reference]
+*** link:domain/reference/node/mongo/gen-mongo-js.html[Generate Node and Mongoose]
+*** link:domain/reference/java/roo/gen-roo.html[Generate Spring Roo]
+** Tutorials
+*** link:domain/tutorials/roo-tutorial.html[Spring Roo Tutorial]
+** Platform Specific Documentation
+*** link:domain/reference/node/mongo/gen-mongo-js.html[Generating Node.js and Mongo]
+* Conversation Language
+** References
+*** link:conversation/reference/languageReference.html[Language reference]
+*** link:conversation/reference/artifactsAndConcepts.html[Artifacts and Concepts]
+*** link:conversation/reference/graphicalSyntaxReference.html[Graphical Syntax Reference]
+*** link:conversation/reference/architecture/ConversationArchitecture.html[The conversation architecture]
+** Tutorials (TBD)

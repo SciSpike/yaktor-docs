@@ -1,0 +1,186 @@
+= Conversation Engine for U/I Developers
+
+== Introduction
+
+This document contains a discussion of what we believe is the most important things for U/I developers to understand when working with the conversation engine.
+
+The conversation engine from a U/I perspective is primarily exposed through something we call the +conversation language+.
+
+== What is the Conversation Language (+cl+)
+
+From a U/I perspective, the conversation language is a way to define an interface between the browser and the server.
+The conversation language can also be used to define the behavior of the server side code, but we'll focus primarily on how to use the conversation language from a U/I perspective.
+
+The interface between the browser and the server is primarily taking two shapes:
+
+* REST API's (aka REpresentational State Transfer)
+* Websocket based user-agent API's.
+
+=== What is a REST API?
+
+REST is a way to create, read, update or delete information on a server using simple HTTP calls. It is an alternative to more complex mechanisms like SOAP, CORBA en RPC. A REST call is simply a GET HTTP request to the server.
+
+You can read more about REST here: http://en.wikipedia.org/wiki/Representational_state_transfer
+
+=== What is WebSocket based user-agent API's?
+
+Perhaps we should define what WebSockets and user-agents are first?
+
+* WebSocket is a protocol providing full-duplex communications channels over a single TCP connection. 
+* User-agent is software (a software agent) that is acting on behalf of a user.
+
+The conversation allows us to define what we call +agents+. For each agent we can generate a JavaScript implementation that you can use from the browser to participate in what we call +conversations+.
+
+That gives us two more words we need to define.
+
+* +Conversation+. A conversation is a definition of a set of behaviors that the application need to exhibit. The way the conversation specifies this behavior by defining a set of +agents+ and the collaboration between this set of +agents+.
+* +Agent+. An agent defines some piece of behavior in the conversation
+
+== A Simple REST-full Example
+
+Let's start with a simple example of a REST API.
+
+Let's say we want to make a simple user interface to keep track of a TODO list.
+This would be a typical example of when REST API would be the most proper way to connect between the browser and server.
+
+What we as U/I developers is to get access to the TODO list. 
+The way to think of this is that we're accing a +resource+ of type TODO items.
+
+We would probably have to be able to:
+
+* Get a list of the TODO items
+* Get the details of each TODO item
+* Create new TODO items
+* Delete existing TODO items
+* Update existing TODO items
+* Search for specific TODO items
+
+When using REST, we want to think of the server as a simple data provider.
+
+We would define this in a simple text file with the extension +cl+ (conversation langauge).
+
+There are two things we'll have to define:
+
+1. What makes up a TODO item?
+2. What are the functions we need (for example we may only need to read a resource, not delete)?
+
+Here is an example of a CL file that defines such a resource:
+
+[source]
+--------------------------
+conversation ToDoConversation { <1>
+	/*
+	 * This defines the data structure we'll use
+	 */
+	type TODOItem {	// <2>
+		String name
+		String details?
+		Date whenDue?
+	}
+	/*
+	 * Defines a resource API
+	 */
+	resource // <3>
+		/todos  // <4>
+		for ToDoConversation.TODOItem  <5>
+		offers (create read update delete find)  <6>
+		interchanges (json) <7>
+}
+--------------------------
+<1> The name of the conversation is +ToDoConversation+.
+<2> The data structure for todo items is called TODOItem (we need to name it so that we can refer to it later).
+<3> The keyword +resource+ starts the definition of a REST API.
+<4> After the keyword +resource+ we define the URL that makes up the base for the REST API (+/todos+ in this example).
+<5> Next we specify the the data structure that we'll be interchanging. We'll come back to what this looks like for us later.
+<6> Next we specify what functions we'll require to access the resource.
+<7> And finally, we define that we expect to send/receive JSON data (as opposed to say XML).
+
+=== What is a Type?
+
+In the +cl+ file, we defined something we call type.
+If your only programming experience is JavaScript, the concept of type (aka class) may be unfamiliar.
+
+A type defines the rules for a data structure. 
+On the U/I side, most of our data structures are represented by JSON. 
+Let's study the example of the +TODOItem+ from the +cl+ file.
+
+[source]
+--------------------------
+	type TODOItem {	// <1>
+		String name 	// <2>
+		String details? // <3>
+		Date whenDue?   // <4>
+	}
+--------------------------
+<1> We're defining rules for a kind of object (+type+) that we'll call +TODOItem+.
+<2> TODOItems should always have a property +name+ and it must be a string.
+<3> TODOItems may have a property called +details+ and if it does, it must be a string.
+	We see that it is optional because the specifier has added a questionmark at the end of the property definition.
+<4> TODOItems may have a property called +whenDue+ and if it does, it must be a data type.
+	A date type is actually also a string in JSON terms, but it has to follow the rules of ISO8601.
+
+Let's take a look at some JSON objects and see if they confirm to the rules of +TODOItem+.
+
+[source,javascript]
+--------------------------
+var someObject = {
+	"name": "Pickup John at Airport",
+	"details": "John arrives at 8PM. His flight is AA821 and he'll call me when he lands."
+};
+--------------------------
+
+This object confirms to the rules of TODOItems (we can say, it is a valid instance of a TODOItem).
+The object has two properties; +name+, which was required and is of type string; +details+ which is not required, but when present must be a string.
+Notice that we don't have the property +whenDue+, but this is perfectly OK as the specifier of the TODOItem made +whenDue+ optional.
+
+[source,javascript]
+--------------------------
+var someObject = {
+	"name": 55,
+	"details": "John arrives at 8PM. His flight is AA821 and he'll call me when he lands."
+};
+--------------------------
+In the above example, the +someObject+ does not confirm to the +TODOItem+ rules as the name was specified to be a string, but we provided a numeric value instead.
+
+[source,javascript]
+--------------------------
+var someObject = {
+	"name": "Pickup John at Airport",
+	"details": "John arrives at 8PM. His flight is AA821 and he'll call me when he lands.",
+	"whenDue": "tomorrow"
+};
+--------------------------
++someObject+ is not a valid +TODOItem+ as the +whenDue+ property can not be parsed into a Date format using the ISO8601 specification.
+
+=== Why Types?
+
+We typically define types because we want to ensure that the communication between the browser and the server is well understood by the ones writing the U/I and the server.
+
+You can think of the conversation language as a definition of a contract between the U/I developers and the backend developers (it does much more than that, but for now, this is a good way to think about it).
+We want to make sure that when the server sends us some data that we know exactly what data to expect. 
+A server programmer has exactly the same need when they receive data from us.
+
+=== Accessing the REST Resource
+
+TODO:
+	Add some examples of how to access the REST API here (perhaps also show some easy IDE RestEasy?)
+
+=== U/I Generator
+
+We have also provided a simple U/I generator that generates the code to access the REST API.
+This U/I generator is out of scope for this article, but it may help you get a good starting point for your development.
+
+To read more about the U/I Generator see this article (TODO INSERT LINK HERE).
+
+== Interacting with a Conversation
+
+You most likely already had experience working with REST APIs. 
+The next topic, how to interact with conversations, will expose you to a technique that is less common and may at first look a bit scary.
+
+We mentioned earlier that we sometimes specify the interaction between the browsers and server to use WebSockets over a user-agent API.
+
+With this type of interaction, partial behavior is of the U/I is dictated by the server. 
+The conversation language generates some JavaScript that interact with the server in a way where:
+
+* The se
+

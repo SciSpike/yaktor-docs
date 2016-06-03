@@ -1,0 +1,125 @@
+:sectanchors:
+:icons: font
+
+= Conversation Graphical Notation
+
+== Introduction
+When depicting a conversation graphically, we try to stick to well published notations where possible.
+We aim at using UML, but we've found UML to lack some syntactical constructs that helps us visually investigate the semantic of the conversation.
+
+== Role of the Harel Statecharts
+We're using http://en.wikipedia.org/wiki/State_diagram#Harel_statechart[Harel statecharts] to describe agent behaviors. 
+Harel is also the notation of UML. 
+You can read more about the UML state chart notation (hence also the Harel statecharts) http://en.wikipedia.org/wiki/State_diagram_(UML)[here].
+
+== Differences from Standard State Models
+In our conversation diagrams, we depict one state model for each agent.
+In addition to these relatively standard state model, we also show how the state models collaborate.
+The collaboration is limited to events produced and consumed by the agents.
+
+In the conversation language, there are two ways that the event dependency may manifest itself.
+
+1. Agent A produces events that other agents consume
+2. Agent A consume events produce by other agents
+
+In the first case (A produces events), we'll have some declaration of agent A similar to this:
+
+[source,cl]
+--------------------------------
+/* 
+ * hello
+ */
+infinite agent A concerning DTO {
+    executes trigger
+    produces producedEvent                          // <1>
+    begins in someState {
+        someState {
+            trigger -> someState > producedEvent    // <2>
+        }
+    }
+  }
+--------------------------------
+<1> We declare that agent A +produces+ the event +producedEvent+
+<2> Somewhere in the state model, agent A will produce the event. 
+    In this case, when +trigger+ occurs, agent A remains in the +someState+ state but also produce +producedEvent+
+
+.Graphical depiction of produces example
+
+["graphviz","produces"]
+--------------------------------
+digraph example {
+  fontname="Arial";
+subgraph "cluster_example_A" {
+  color=black;
+  label="example_A";
+  "example_A.start__" [label="",color="black", shape=circle, style=filled, width=.33]
+  "example_A.someState" [label="someState",  shape="Mrecord", color=darkgreen, XXXsomeStateXXX=""]
+  "example_A.start__" -> "example_A.someState" [arrowhead=vee]
+}
+subgraph "cluster_example_A_e" {
+  color=black;
+  label="example_A\nEvents";
+  "example_A.___start.e" [label="", shape=none]
+  "example_A.___start.e" ->
+  "example_A.producedEvent.e" [color=white, shape=none]
+  "example_A.producedEvent.e" [label="A.producedEvent" shape="rectangle", style="filled", color=red, fillcolor="#fff2f1"]
+  "example_A.producedEvent.e" ->
+  "example_A.___end.e" [color=white, shape=none]
+  "example_A.___end.e" [ label="",  shape=none]
+}
+"example_A.someState" -> "example_A.someState" [ label="trigger",arrowhead=vee]
+"example_A.someState" -> "example_A.producedEvent.e" [label="{trigger}", fontcolor=red, arrowhead="oboxnormal", color=red]
+}
+--------------------------------
+
+It is important to take notice of the graphical extensions we've done.
+First, we are depicting the events as rectangular boxes (in the example above, +A.producedEvent+).
+Notice that the event shown has a red tint to it. 
+We use the color red when the event is declared in a +produces+ clause.
+We've also annotated the state model with indications of when the event is produced. 
+Notice the red line going from the state +someState+ to the event.
+This indicates that the event is produced upon some event, +trigger+, when agent A is in the state +someState+.
+
+In the second case (where A consumes events), we may have a declaration like this:
+
+[source,cl]
+--------------------------------
+infinite agent A concerning DTO {
+    consumes consumedEvent              // <1>
+    begins in someState {
+        someState {
+            consumedEvent -> someState  // <2>
+        }
+    }
+  }
+--------------------------------
+<1> Agent A declares that it consumes the event +consumedEvent+
+<2> Agent A declares that it will listen to the +consumedEvent+ whilst in the state +someState+
+
+.Graphical depiction of consumes example
+["graphviz","consumes"]
+--------------------------------
+digraph example {
+  fontname="Arial";
+subgraph "cluster_example_A" {
+  color=black;
+  label="example_A";
+  "example_A.start__" [label="",color="black", shape=circle, style=filled, width=.33]
+  "example_A.someState" [label="someState",  shape="Mrecord", color=darkgreen, XXXsomeStateXXX=""]
+  "example_A.start__" -> "example_A.someState" [arrowhead=vee]
+}
+subgraph "cluster_example_A_e" {
+  color=black;
+  label="example_A\nEvents";
+  "example_A.___start.e" [label="", shape=none]
+  "example_A.___start.e" ->
+  "example_A.consumedEvent.e" [color=white, shape=none]
+  "example_A.consumedEvent.e" [label="A.consumedEvent" shape="rectangle", style="filled", color=blue, fillcolor="#bee3ff"]
+  "example_A.consumedEvent.e" ->
+  "example_A.___end.e" [color=white, shape=none]
+  "example_A.___end.e" [ label="",  shape=none]
+}
+"example_A.someState" -> "example_A.someState" [ label="consumedEvent",arrowhead=vee]
+"example_A.consumedEvent.e" -> "example_A.someState" [color=blue]
+}
+--------------------------------

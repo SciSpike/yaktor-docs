@@ -1,0 +1,268 @@
+= Getting Started
+
+== Introduction
+
+To develop conversations, you'll have to install a few tools.
+We at SciSpike use Yaktor itself.
+You are probably already familiar with Node.js development, and if you are, this is a simple +npm+ install.
+In addition, we depend on a code generator which we from the command line or run in an IDE called Eclipse.
+
+There are two distinct roles as well a link:#developer-role[Developer Role] and a link:business-role[Business Role]
+
+== Required Tools
+
+* Eclipse
+  ** Install the latest version of http://www.eclipse.org/downloads/[Eclipse]. If you prefer, you could instead install the latest version of Spring Tool Suite, Nodeeclipse, Enide, or any other IDE based on Eclipse.
+
+  ** After installing Eclipse, you must install a few required plugins.
+. In Eclipse, go to *Help > Install New Software*
++
+For "Work with", select *--All Available Sites--* and install the _JavaScript Development Tools_ plugin.
++
+. Next, add the following update site: http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/
++
+Select the update site you just added for "Work with" and install the _Xtext SDK_ plugin. Ensure that the version selected is at least 2.5. Otherwise you will run into conflicts in the next step.
++
+. Finally, add another update site for the Yaktor plugins: http://scispike-elearning.com/conversation/update.all/
++
+Select the update site you just added for "Work with" and install both the _Conversation_ and _Domain_ plugins.
++
+
+* Node.js
+  .. Install the latest version of http://nodejs.org/download/[Node.js]
+  .. If you already have Node.js installed, ensure that the version is >= v0.10
+  .. +npm+ is a command line package manager for Node.js. It should have been automatically installed with the Node.js installation but you can use the following command to ensure it is installed.
++
+[source,bash]
+---------
+npm help
+---------
++
+* MongoDB
+  .. Install the latest version of http://docs.mongodb.org/manual/installation/[MongoDB]
+* Cassandra
+  .. Install the latest version of http://www.datastax.com/documentation/getting_started/doc/getting_started/gsInstallCassandra.html[Cassandra]
+  ... http://www.datastax.com/documentation/getting_started/doc/getting_started/gettingStartedWindows_t.html[Windows]
+  ... http://www.datastax.com/documentation/getting_started/doc/getting_started/gettingStartedTar_t.html[Mac or Linux]
+  .. Start Cassandra
++
+[source,bash]
+---------
+sudo nohup ${CASSANDRA_DIR}/bin/cassandra
+---------
++
+  .. Open the Cassandra Shell (+cqlsh+)
++
+[source,bash]
+---------
+${CASSANDRA_DIR}/bin/cqlsh
+---------
++
+  .. Run the following command to create the "engine" Keyspace
++
+[source,cql]
+---------
+create keyspace engine with REPLICATION = {'class':'SimpleStrategy','replication_factor':1};
+---------
+
+[IMPORTANT]
+.Requires jdk1.7
+=====
+Cassandra 2.x requires that you have JAVA7 available, either via +JAVA_HOME+ or +java -version+
+=====
+
+== Business Role
+
+=== Getting a Conversation
+
+In general if you are in the Business Role someone else would have created a project and it should be waiting in some source code repository for you to get.
+For example it may be in github where you would:
+
+[source,bash]
+---------
+git clone git@github.com:ORGNAME/PROJECT_NAME.git
+---------
+
+Now from the context of the cloned project:
+
+[source,bash]
+---------
+npm install
+---------
+
+=== Install/Creating Conversation
+
+In some instances you may be responsible for creating conversations. You will need
+some tools installed before hand which will facilitate this process.
+To install the tools you must first obtain an oAuth token.
+This token can be obtained from SciSpike.
+The token gives you read access to the conversation engine's
+module library.
+
+Let's say you get a key like: \_KEY_KEY_KEY_.
+
+[source,bash]
+---------
+npm install -g https://_KEY_KEY_KEY_:x-oauth-basic@github.com/yaktor/yaktor/tarball/<someVersion> # <1>
+---------
+<1> where +<someVersion>+ is a version name/number like master or v2.0.0
+
+Once you have the tools installed simple create as many projects as you need
+
+[source,bash]
+---------
+conversation create <someName> # <1>
+---------
+<1> where +<someName>+ is the name of the project you wish to create
+
+
+=== Staying update to date
+
+As frequently as you are directed (by the powers that be) update the eclipse plugin and
+from the context of the project:
+
+[source,bash]
+---------
+conversation migrate
+---------
+
+=== Moving to a new version
+If you created/maintain a conversation project you may from time to time need to update thing.
+The first thing you must do is change the version of the conversation as it is specified in the package.json
+
+[source,js]
+.simplified package.json
+---------
+{
+  "dependencies": {
+    "conversation": "https://_KEY_KEY_KEY_:x-oauth-basic@github.com/yaktor/yaktor/tarball/v1.2.3"       // <1>
+  },
+  "version": "0.0.1",
+  "private": true,
+  "name": "simplified"
+}
+---------
+<1> a change could be from +.../tarball/v1.2.3+ to +.../tarball/v1.2.4+ in order to increase by one minor version.
+
+Once you have bumped the version you would follow the instructions found in link:#staying-update-to-date[Staying update to date].
+
+== Developer Role
+
+This is not any regular developer, but rather someone who is contributing to the Yaktor projects (i.e. yaktor or yaktor-ui-angular1).
+
+Also for those creating conversation based projects you will need to link:#install-conversation[Install Yaktor] in order to create Yaktor projects.
+
+If you don't have the ability to do this than you aren't in this role :)
+
+=== Install Conversation
+
+In order to get immediate access to the changes you are making to Yaktor code you must have a few things in place first.
+This must be done precisely, otherwise you will get unexpected results.
+
+The first thing you must do is get access to the Yaktor repos and any other tools you need.
+Then you must globally install your checked out copy of Yaktor for npm.
+
+[source,bash]
+---------
+git clone git@github.com:yaktor/yaktor.git
+cd yaktor
+sudo npm link # <1>
+cd ~/dev
+yaktor create test123 # <2>
+cd ~/dev/someExistingProjectYouWantToTestYourChangeIn
+yaktor migrate -d # <3>
+yaktor migrate -d # <4>
+---------
+<1> Once you have linked the project you can create
+<2> Now you can create some projects to test your changes in
+<3> You may want to convert some existing project into a test bed for your changes. You probably should
+update the project according to link:#moving-to-a-new-version[Moving to a new version] so that everyone else can benefit from your changes.
+<4> A second yaktor migrate is necessary as the first one simply updated your project to have things symlinked, and likely didn't use the global install.
+
+[WARNING]
+.Not a engine-ui developer?
+====
+If you are not developing yaktor-ui-angular1 you need to then install yaktor-ui-angular1 globally. Or just
+follow the instructions to link:#setup-for-engine-ui-development[Setup for yaktor-ui-angular1 development].
+====
+
+
+=== Setup for Engine-UI development
+. First, clone the following repository:
++
+[source,bash]
+---------
+git clone git@github.com:yaktor/yaktor-ui-angular1.git
+cd yaktor-ui-angular1
+sudo npm link
+---------
++
+. Go to [all] projects you are wanting to use your uncommited changes and run the following command:
++
+[source,bash]
+---------
+npm link yaktor-ui-angular1
+---------
+
+== Create a new project
+
+To create a new project, run the following commands from a convenient directory in which you want the new project.
+
+[source,bash]
+-----------
+yaktor create NEW_PROJECT_NAME
+cd NEW_PROJECT_NAME
+-----------
+
+[WARNING]
+.Fail
+=====
+Of course you should replace *NEW_PROJECT_NAME* with the names of your project and directory.
+=====
+
+== Import your project into Eclipse
+
+After you have created the project using the +yaktor+ command line tool, you'll have to import this project into a workspace in Eclipse.
+To do so, you must:
+
+. Select *Import*
+. Select *Existing projects into workspace*
+. Browse to where you placed the new project
+. Follow the remaining confirmation dialogs to add the project to your workspace
+
+== Verify that the application runs
+The application has a sample dsl file.
+The example is simple and if everything is working, you should be all set.
+
+There are two services that must run for the application to work.
+
+. Cassandra.
+To start up Cassandra you'll have to go into the bin directory where you expanded Cassandra and run (you may have to run as sudo):
+
+	./cassandra
+
+. Mongo
+If you followed the Mongo installation, you should have mongo on your path.You may have to run as sudo:
+
+	mongod
+
+== Develop your first conversation
+
+For information about developing a conversation please read the link:../reference/languageReference.html[Conversation Language Reference].
+
+== Trouble Shooting
+
+=== .gitignore troubles
+
+If you are receiving a +SyntaxError+ residing in a .gitignore file, Eclipse is not your friend. You must teach Eclipse
+a lesson. Go to Preferences -> Team -> Git -> Project. Then *uncheck* "Automatically ignore derived resources by adding them to .gitignore".
+
+[NOTE]
+.Cleanup the mess
+=====
+[source, bash]
+.In the root of your Project
+---------
+git ls-files --others --exclude-standard | grep .gitignore | xargs rm
+---------
+=====

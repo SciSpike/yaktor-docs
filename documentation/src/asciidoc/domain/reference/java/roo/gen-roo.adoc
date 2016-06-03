@@ -1,0 +1,115 @@
+= Generating Roo Scripts
+
+== Introduction
+
+Spring has a nice tool called Roo.
+Roo is a generative framework for Spring Java web applications.
+In a Spring Roo project, you'll use a high-level script to describe your domain model and the Roo tool generates the application for you.
+You can find more about the Spring Roo project http://projects.spring.io/spring-roo/[here].
+
+We do support generation of Roo scripts from the domain model.
+
+== Defining the +roo-gen-options+
+
+To generate a roo script, you'll have to provide a +roo-gen-options+ element as the first element in the +domain-model+ definition.
+
+Here is an example of such a specification.
+
+[source]
+----------------------
+domain-model Example {
+    roo-gen-options {                       // <1>
+        project-options {                   // <2>
+            root-package com.scispike.test  // <3>
+            project-name test               // <4>
+        }
+        persistence-options {               // <5>
+            database DERBY_EMBEDDED         // <6>
+            provider HIBERNATE              // <7>
+        }
+    }
+    // continued
+}
+----------------------
+<1> The +roo-gen-options+ section.
+<2> The +project-options+ section defines some of the essential metadata for the project.
+<3> The +root-package+ specifies the name of the root package.
+<4> The +project-name+ element specified the name of the project.
+<5> We have a separate section for specifying the nature of the persistence: +persistence-options+
+<6> We've specified the kind of database using the +database+ keyword
+<7> We've also specified the JPA provider we want to use
+
+== Code Generation
+
+When you save a domain model with the +roo-gen-options+ element defined, the code generators will generate a script in the src-gen directory with the name +DomainModelName+.roo.
+
+This should be a complete roo script that you can now run using the roo tool to generate an application.
+
+== The Project Options
+
+[cols="1,1,3", options="headers"]
+|===
+|Option
+|Type
+|Value
+
+|root-package
+|String
+|This element is required. Roo requires that you have a root package for your project. E.g. +root-package com.scispike.myproject+
+
+|project-name
+|String
+|This element is required. Roo requires all scripts to define the project name
+
+|json-support
+|N/A
+|If this keyword is present, roo will generate JSON support in the web layers
+
+|controller-subpackage
+|String
+|This element is optional. If not present, roo will use a default package name (+controller+). Roo will generate all MVC-Controllers in the specified controller-subpackage of the root-package
+
+|domain-subpackage
+|String
+|This element is optional. If not present, roo will use a default package name (+domain+). Roo will generate all JPA classes in the specified domain-subpackage of the root-package
+
+|===
+
+== The Persistence Options
+
+[cols="1,1,3", options="headers"]
+|===
+|Option
+|Type
+|Value
+
+|database
+|Enum
+|Although this element is not required for the model to parse, it is in practice required to make the roo script complete.
+The values that this can take is controlled by an enumerated list, so when you use the editor, use the auto-completion to get this right.
+The list is populated based on the types that Roo supports.
+
+
+|provider
+|Enum
+|Although this element is not required for the model to parse, it is in practice required to make the roo script complete.
+The values that this can take are controlled by an enumerated list, so when you use the editor, use the auto-completion to get this right.
+The list is populated based on the types that Roo supports.
+
+|db-name
+|String
+|Optional. If present, the roo script will specify the database name.
+
+|user
+|String
+|Optional. If present, roo will populate the database configuration with this username for connections.
+
+|password
+|String
+|Optional. If present, roo will populate the database configuration with this password for connections.
+
+|url
+|String
+|Optional (although, some database types may require it). Specifies the URL to the database.
+
+|===

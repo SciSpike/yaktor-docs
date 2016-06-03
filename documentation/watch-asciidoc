@@ -1,0 +1,15 @@
+# ensure required executables are on the path
+for c in ruby nodemon asciidoctor
+do
+	if [ ! `which $c` ]; then
+	   echo "This script requires $c."
+	   exit 1
+	fi
+done
+
+#DIRS="src/stylesheets `find src/asciidoc -type d`"
+
+echo $DIRS
+
+nodemon -w "src" -e ".adoc" -x "./build.rb"
+

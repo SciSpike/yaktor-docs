@@ -1,0 +1,141 @@
+= Deriving DTO's from Domain Models
+
+== Introduction
+
+This tutorial is primarily covered in a video.
+This page only holds supporting material.
+
+To watch the tutorial, please click on the following link:
+
+* https://vimeo.com/81536424[Link to Tutorial Video]
+
+== The Idea
+
+When creating a traditional web application (one may argue also, any kind of application), you often maintain two different kinds of data objects.
+
+* The data that you store in a database
+** Usually in the form of some canonical information model
+* The DTOs (or Data Transfer Objects)
+** Data passed between services
+** Data passed between the U/I and the server
+
+The DTO's are most often an extract from the database or at least some projection from a logical information model that describes the domain.
+
+These models often gets out of sync.
+People have tried different approaches to prevent this. The two most common are:
+
+* Store your DTO's in the database
+* Use domain models as DTO's
+
+In most application, neither approaches work and developers often have to revert to define both DTO's and domain objects. This causes:
+
+* Significant extra effort to perform mapping between the two models (in some projects we've been involved, we've measured this to as as much as 60% of the total programming effort)
+* Potential impedance mismatch between the two models causing an increased spurious complexity.
+
+We show in this tutorial our approach to this problem.
+
+== Domain Model as Used in Tutorial
+
+[source]
+----------------
+domain-model LibraryDM {
+    entity Member {
+        String firstName!
+        String lastName!
+        String memberId! unique
+    }
+    entity Title {
+        String name!
+    }
+    entity Author {
+        String name!
+    }
+    entity Copy {
+        String scanId! unique
+        String knownDefects*
+    }
+    entity Loan {
+        Date whenCheckedOut!
+        Date whenReturned?
+        Date whenDue!
+    }
+    association Title2Author {
+        start Title titles*
+        end Author authors*
+    }
+    association Title2Copies {
+        start Title title!
+        end Copy copies*
+    }
+    association Copy2Loan {
+        start Copy copy!
+        end Loan loans*
+    }
+    association Member2Loan {
+        start Member borrower!
+        end Loan loans*
+    }
+}
+----------------
+
+== Conversation Model as Used in Tutorial
+
+Please note that the tutorial did not complete this model.
+To complete the model, we would (at least) have to defined the conversation object to tie the actors together.
+
+[source]
+----------------
+conversation checkoutProcess  {
+
+    type CheckoutRequest  {
+        String scanId!
+        String memberId!
+    }
+
+    type CheckoutReceipt from LibraryDM.Loan {
+        copy {
+            knownDefects
+            title {
+                name {
+                    authors {
+                        name
+                    }
+                }
+            }
+        }
+        whenCheckedOut
+        whenDue
+        borrower {
+            firstName
+            lastName
+        }
+    }
+    agent Borrower concerning CheckoutRequest {
+        sends checkout : CheckoutRequest
+        receives checkoutComplete: CheckoutReceipt
+        privately receives readyToCheckout
+        initially becomes idle {
+            idle {
+                readyToCheckout -> watingForResponse > checkout
+            }
+            watingForResponse {
+                checkoutComplete -> checkedOut
+            }
+            checkedOut {
+
+            }
+        }
+    }
+    infinite agent CheckoutVerifier concerning CheckoutRequest {
+        privately receives checkoutOk
+        initially becomes idle {
+            idle {
+                Borrower.checkout -> verifying
+            }
+            verifying {
+                checkoutOk -> idle > Borrower.checkoutComplete
+            }
+        }
+    }
+}
+----------------

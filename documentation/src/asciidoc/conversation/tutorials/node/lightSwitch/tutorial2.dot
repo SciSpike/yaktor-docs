@@ -1,0 +1,46 @@
+digraph tutorial {
+  fontname="Arial";
+subgraph "cluster_tutorial_LightBulb" {
+  color=black;
+  label="tutorial_LightBulb";
+  "tutorial_LightBulb.start__" [label="",color="black", shape=circle, style=filled, width=.33]
+  "tutorial_LightBulb.end__" [label="",color="black", shape=doublecircle, style=filled, width=.33]
+  "tutorial_LightBulb.off" [label="off",  shape="Mrecord", color=darkgreen, XXXoffXXX=""]
+  "tutorial_LightBulb.on" [label="on",  shape="Mrecord", color=darkgreen, XXXonXXX=""]
+  "tutorial_LightBulb.broken" [label="broken",  shape="Mrecord", color=darkgreen, XXXbrokenXXX=""]
+  "tutorial_LightBulb.broken" -> "tutorial_LightBulb.end__"  [arrowhead=vee]
+  "tutorial_LightBulb.start__" -> "tutorial_LightBulb.off" [arrowhead=vee]
+}
+subgraph "cluster_tutorial_LightSwitch" {
+  color=black;
+  label="tutorial_LightSwitch";
+  "tutorial_LightSwitch.start__" [label="",color="black", shape=circle, style=filled, width=.33]
+  "tutorial_LightSwitch.off" [label="off",  shape="Mrecord", color=darkgreen, XXXoffXXX=""]
+  "tutorial_LightSwitch.on" [label="on",  shape="Mrecord", color=darkgreen, XXXonXXX=""]
+  "tutorial_LightSwitch.start__" -> "tutorial_LightSwitch.off" [arrowhead=vee]
+}
+subgraph "cluster_tutorial_LightBulb_e" {
+  color=black;
+  label="tutorial_LightBulb\nEvents";
+  "tutorial_LightBulb.___start.e" [label="", shape=none]
+  "tutorial_LightBulb.___start.e" ->
+  "tutorial_LightBulb.turnOn.e" [color=white, shape=none]
+  "tutorial_LightBulb.turnOn.e" [label="LightBulb.turnOn" shape="rectangle", style="filled", color=blue, fillcolor="#bee3ff"]
+  "tutorial_LightBulb.turnOn.e" ->
+  "tutorial_LightBulb.turnOff.e" [color=white, shape=none]
+  "tutorial_LightBulb.turnOff.e" [label="LightBulb.turnOff" shape="rectangle", style="filled", color=blue, fillcolor="#bee3ff"]
+  "tutorial_LightBulb.turnOff.e" ->
+  "tutorial_LightBulb.___end.e" [color=white, shape=none]
+  "tutorial_LightBulb.___end.e" [ label="",  shape=none]
+}
+"tutorial_LightBulb.off" -> "tutorial_LightBulb.on" [ label="turnOn",arrowhead=vee]
+"tutorial_LightBulb.off" -> "tutorial_LightBulb.broken" [ label="failed",arrowhead=vee]
+"tutorial_LightBulb.on" -> "tutorial_LightBulb.off" [ label="turnOff",arrowhead=vee]
+"tutorial_LightBulb.on" -> "tutorial_LightBulb.broken" [ label="failed",arrowhead=vee]
+"tutorial_LightBulb.turnOn.e" -> "tutorial_LightBulb.off" [color=blue]
+"tutorial_LightBulb.turnOff.e" -> "tutorial_LightBulb.on" [color=blue]
+"tutorial_LightSwitch.off" -> "tutorial_LightSwitch.on" [ label="on",arrowhead=vee]
+"tutorial_LightSwitch.on" -> "tutorial_LightSwitch.off" [ label="off",arrowhead=vee]
+"tutorial_LightSwitch.off" -> "tutorial_LightBulb.turnOff.e" [label="{on}", fontcolor=red, arrowhead="oboxnormal", color=red]
+"tutorial_LightSwitch.on" -> "tutorial_LightBulb.turnOn.e" [label="{off}", fontcolor=red, arrowhead="oboxnormal", color=red]
+}
