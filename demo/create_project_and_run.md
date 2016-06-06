@@ -145,7 +145,7 @@ To do so, run the following command to start the server.
 $ npm start
 ```
 
-### 5. Try out the conversation
+### 6. Try out the conversation
 
 Open the following URL in your browser:
 
