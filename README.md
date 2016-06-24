@@ -19,7 +19,7 @@ There are multiple ways of getting started with Yaktor.
   - Install docker
   - Pull the yaktor image
 
-For now, we'll focus on the easy way. Follow [these steps](DockerInstall.md)
+For now, we'll focus on the easy way. Follow [these steps](DockerInstall.md) to get started.
 
 ## Tutorials
 
