@@ -5,12 +5,12 @@
 We've tried to minimize the tools required to run Yaktor. 
 Yaktor is a rather extensive tool and it depends on a very large set of open source components.
 
-When we've used Yaktor for different project, it seems many developers end up in a non-predictable state where they've installed some tool the wrong way.
-To minimize the number of steps, we decided to use docker to install our dependencies + Yaktor.
+When we've used Yaktor for different projects, it seems many developers end up in a non-predictable state where they've installed some tool the wrong way.
+To minimize the number of steps, we decided to use Docker to install our dependencies + Yaktor.
 
 In theory, that means that as long as you get Docker installed correctly, all other dependencies should take care of themselves. 
 
-As you get more familiar with Yaktor and start to explore on your own, you probably want to know a bit more about our dependencies, but for this document, we'll just try to focus on the installation without much justification.
+As you get more familiar with Yaktor and start to explore it on your own, you probably want to know a bit more about our dependencies, but for this document, we'll just try to focus on the installation without much justification.
 It's worth knowing, however, that the steps below avoids having to explain how to install a large set of tools (MongoDB, Node.js, Grunt, Ruby, Perl, ...).
 
 The only tools we'll ask you to install are:
@@ -215,4 +215,11 @@ We can then launch the browser on:
 http://172.20.0.2
 
 Congratulations, you  have successfully installed Yaktor!!!
+
+## Next steps
+
+We suggest that you next start to browse the code and understand the conversation langauge of Yaktor.
+
+[This article](YaktorInitialTemplate.md) explains the defualt project you created above.
+
 
