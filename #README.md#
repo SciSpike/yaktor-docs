@@ -14,9 +14,7 @@ There are multiple ways of getting started with Yaktor.
   - Java
   - Ruby
   - ActiveMQ
-  - AsciiDoctor
-  - Graphviz
-  - Cassandra 
+  - +++
 - **The easy way**: Use Docker
   - Install docker
   - Pull the yaktor image
