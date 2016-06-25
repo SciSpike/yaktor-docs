@@ -14,12 +14,11 @@ We'll focus on a subset here.
 The first code generator we'll look at is the `gen-src`. 
 
 The `gen-src` command reads the yaktor langauges files and generate source code from them.
-In the current version, `gen-src` is defined as a grunt task.
 
 If you run Yaktor using the Docker image, the command is:
 
 ```
-$ yak grunt gen-src
+$ yak gen-src
 ```
 
 If you decided to go the **hard** route when installing Yaktor, you may have all the node.js and grunt tools installed and may run the command as:
@@ -39,20 +38,20 @@ Because we'll only explain the demo file in this article, we'll focus on what is
 ### gen-views
 
 The `gen-views` command is used to generate user interfaces.
-It's also a grunt command and can be run as:
+Itcan be run as:
 
 ```
-$ yak grunt gen-views
+$ yak gen-views
 ```
 
 or drop the `yak` if you are running outside docker.
 
-## grunt start
+## start
 
 You can start the server after having completed the code generation commands as follows:
 
 ```
-$ yak grunt start
+$ yak start
 ```
 
 ## Study the `cl` file

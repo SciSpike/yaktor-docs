@@ -179,22 +179,20 @@ It may take some time to get this running the first time (depending mostly on yo
 Here is the command to run:
 
 ```bash
-$ yak grunt gen-src gen-views
+$ yak gen-src gen-views
 ```
 
-This runs two grunt (see: http://gruntjs.com/):
+This runs two commands:
 
 - `gen-src` which generates the backend server code
 - `gen-views` which generates the U/I code
-
-Grunt, node, npm, and all the other tools we need are installed in the docker image we created, so no need to install those (neat, huh?).
 
 You should see a ton of log messages from the code generator, and hopefully, it completes successfully.
 
 ### Run the server
 
 ```bash
-$ yak grunt start
+$ yak start
 ```
 
 You should now see the server start up (it is actually running a set of Docker containers, but for now, let's just think of it as the server starting up).
