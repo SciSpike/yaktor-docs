@@ -2,9 +2,9 @@
 
 == Introduction
 
-This document contains a discussion of what we believe is the most important things for U/I developers to understand when working with the conversation engine.
+This document contains a discussion of what we believe is the most important things for U/I developers to understand when working with the Yaktor engine.
 
-The conversation engine from a U/I perspective is primarily exposed through something we call the +conversation language+.
+The Yaktor engine from a U/I perspective is primarily exposed through something we call the +conversation language+.
 
 == What is the Conversation Language (+cl+)
 

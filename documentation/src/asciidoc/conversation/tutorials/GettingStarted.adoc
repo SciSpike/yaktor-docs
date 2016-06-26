@@ -2,8 +2,12 @@
 
 == Introduction
 
-To develop conversations, you'll have to install a few tools.
-We at SciSpike use Yaktor itself.
+To develop conversations, you'll have to install a few tools. We have an easy way to get started in which you simply install Docker and download a Docker image. 
+
+We strongly recommend that you use this approach in the beginning. 
+You can find a complete description of this in our yaktor-docs repository on GitHub.
+In this document we're aiming at helping those that for whatever reason do not want to use Docker.
+
 You are probably already familiar with Node.js development, and if you are, this is a simple +npm+ install.
 In addition, we depend on a code generator which we from the command line or run in an IDE called Eclipse.
 

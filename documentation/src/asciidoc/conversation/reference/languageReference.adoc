@@ -22,12 +22,11 @@ the ability to describe and constrain interaction between moving parts. Practica
 either toward the tight coupling of tradition pub/sub (coupled responses) or the loose coupling of a virtual chat room.
 
 Toward that end we provide both a communication grammar and conditional state-based behavior. Allowing user-agents (ie Web Clients or Web enabled devices)
-to connect to well ordered back-end services, receive data/updates, and indicate choices and activity. Collaberation facilitated by the
-conversation engine with automatic and decoupled as well as predictable and visually verifiable. It
-also allows for the use of rich feature sets afforded by standard protocols like Ajax and WebSockets.
+to connect to well ordered back-end services, receive data/updates, and indicate choices and activity. 
+Collaberation facilitated by the yaktor engine with automatic and decoupled as well as predictable and visually verifiable. 
+It also allows for the use of rich feature sets afforded by standard protocols like Ajax and WebSockets.
 
 In the end what we achieve is loosely coupled (like the chat room) but with out the chaos, or predictable pub/sub without the coupling.
-
 
 === Conversation Example
 

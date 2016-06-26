@@ -1,5 +1,11 @@
 = Tutorial: Lighting
 
+== Warning
+
+In this tutorial we're using an older version of Yaktor (at the time, the Yaktor went under the name Conversation Engine).
+There may be slight changes to the way the tool works.
+We have kept the tutorial because many developers still find it useful even if the version used in the video is slightly out of date.
+
 == Prerequisites
 
 This article assumes you know how to:
