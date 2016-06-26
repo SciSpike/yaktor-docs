@@ -34,6 +34,12 @@ In addition to this repository, we have a documenation site where we generate do
 
 The documentation site can be found at http://scispike-elearning.com/yaktor/docs/
 
+## Install the editors
+
+Your productivity may increase significantly by using some of the custom editors.
+
+[This article](eclipse/ConfigureEclipse.md) explains how to get the editors up and running.
+
 ## Tutorials
 
 Here are some tutorials:
