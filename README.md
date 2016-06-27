@@ -1,4 +1,6 @@
-# Yaktor Documentation
+![Yaktor Logo](logo-with-text.png)
+
+# Documentation
 
 ## Introduction
 
