@@ -49,4 +49,6 @@ Here are some tutorials:
 - [Installing Yaktor on Docker](DockerInstall.md)
 - [Understand the demo.cl file](YaktorInitialTemplate.md)
 
-Another list of tutorials can be found at http://scispike-elearning.com/yaktor/docs/
+You can also read some more about Yaktor [directly from this repository](documentation/src/asciidoc/index.adoc)
+ 
+ We are also generating a more stylish version of the above link here http://scispike-elearning.com/yaktor/docs/
