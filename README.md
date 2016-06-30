@@ -16,8 +16,8 @@ If you find errors in the documentation, please let us know!
 There are multiple ways of getting started with Yaktor.
 
 - **The easy way**: Use Docker
-  - InstaLll Docker
-  - Pull the yaktor image from the Docker Hub
+  - Install Docker
+  - Pull the [yaktor image] (https://hub.docker.com/r/yaktor/yaktor/) from the Docker Hub
 - **The hard way**: Install the dependencies one-by-one, which requires separate installations of:
   - Node.js
   - MongoDB
