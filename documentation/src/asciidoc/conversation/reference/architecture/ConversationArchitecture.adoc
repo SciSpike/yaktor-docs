@@ -118,7 +118,7 @@ These may be bold claims, but we think when you get a feel for what we have done
 
 === The Layers
 
-image: layers.png[Abstract Layer Diagram]
+image:layers.png[Abstract Layer Diagram]
 
 The above diagram shows you the essential layers used during runtime.
 
