@@ -99,9 +99,11 @@ The agent's life cycle is either +finite+ or +infinite+.
 Use an +infinite+ agent if the agent instance should stay around _forever_ after being instantiated.
 Use a +finite+ agent if the agent represents handles some task that can be completed.
 
-[Note]
-    Sometimes you have the option to design conversations with either finite or infinite agents.
-    If given a choice, we recommend to design the conversation such that it uses finite agents.
+[NOTE]
+====
+Sometimes you have the option to design conversations with either finite or infinite agents.
+If given a choice, we recommend to design the conversation such that it uses finite agents.
+====
 
 === Agent Data Type
 
@@ -611,14 +613,18 @@ When we define resources, we generally intend link:#resource-function-supported[
 but using the proper link:#resource-function-supported[action] along with +text/html,application/xhtml+xml+ you can allow the consumption by a browser user-agent.
 
 [NOTE]
+====
 Resources may be implemented using a more complex protocol such as SOAP,
 but due to limitations of this spec there may be a number of assumptions required before this would work.
+====
 
-[WARNING:]
+[WARNING]
+====
 Religion Alert. We don't subscribe to REST.
 However, we have followed sound principles which have proven useful to many.
 On the other hand, if you think some behavior makes sense in a resource, =go for it=.
 Be on the lookout for link:#services[Services], those are intended for non-event-driven behavior.
+====
 
 === Resource Example
 

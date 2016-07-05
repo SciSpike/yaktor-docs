@@ -86,7 +86,7 @@ domain-model SampleModel {  // <1>
   node-mongo-options {}     // <2>
   entity TODOItem {         // <3>
     ShortId id!             // <4>
-    String title!           // <4>
+    String title!           // <5>
     String description?     // <6>
     Boolean completed?      // <7>
     key(id)                 // <8>
