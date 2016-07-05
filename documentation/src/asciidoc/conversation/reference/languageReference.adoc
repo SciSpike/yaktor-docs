@@ -547,7 +547,7 @@ Say we have a conversation agent as below:
 ------------------------------------------------------------
 conversation HR {
     agent ApplicationHandler {
-        consumes jobApplicationReceived
+        receives jobApplicationReceived
 
         begins in idle {
             idle {
@@ -577,7 +577,7 @@ conversation HR {
         }
     }
     agent ApplicationHandler {
-        consumes jobApplicationReceived : JobApplication     // <2>
+        receives jobApplicationReceived : JobApplication     // <2>
 
         begins in idle {
             idle {

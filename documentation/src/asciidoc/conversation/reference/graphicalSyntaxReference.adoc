@@ -30,9 +30,9 @@ In the first case (A produces events), we'll have some declaration of agent A si
  * hello
  */
 infinite agent A concerning DTO {
-    executes trigger
-    produces producedEvent                          // <1>
-    begins in someState {
+    privately receives trigger
+    sends producedEvent                          // <1>
+    initially becomes someState {
         someState {
             trigger -> someState > producedEvent    // <2>
         }
@@ -85,8 +85,8 @@ In the second case (where A consumes events), we may have a declaration like thi
 [source,cl]
 --------------------------------
 infinite agent A concerning DTO {
-    consumes consumedEvent              // <1>
-    begins in someState {
+    receives consumedEvent              // <1>
+    initially becomes someState {
         someState {
             consumedEvent -> someState  // <2>
         }
