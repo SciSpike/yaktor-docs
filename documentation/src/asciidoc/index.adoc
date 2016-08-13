@@ -2,8 +2,7 @@
 
 == Introduction
 
-This document describes some of the Yaktor tools used on our projects. This is the index file that points to the various documentation that we have produced.
-Hence, you may want to bookmark this page :)
+Yaktor is a suite of tools and methods for producing web applications. Yaktor builds on top of existing technologies in order to produce the best applications possible. However it also has lots of features and benefits over using the supported frameworks by themselves. 
 
 The documentation consists of two kinds of documents:
 

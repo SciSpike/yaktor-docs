@@ -1,0 +1,25 @@
+{
+  "name": "docker-yaktor",
+  "version": "0.1.0",
+  "description": "Documents",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "markdown-html": "0.0.8"
+  },
+  "scripts": {
+    "test": "markdown-html README.md -o index.html",
+    "gen-docs": "(cd documentation/; ./build.rb;)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SciSpike/yaktor-docs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SciSpike/yaktor-docs/issues"
+  },
+  "homepage": "https://github.com/SciSpike/yaktor-docs#readme"
+}

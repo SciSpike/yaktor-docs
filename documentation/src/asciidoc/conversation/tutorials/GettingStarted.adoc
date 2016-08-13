@@ -2,18 +2,20 @@
 
 == Introduction
 
-To develop conversations, you'll have to install a few tools. We have an easy way to get started in which you simply install Docker and download a Docker image. 
+To develop Yaktor based NodeJs applications, you'll have to install a few tools. We have an easy way to get started in which you simply need Docker, our Docker image will provide everthing else you will need to run an application. 
 
-We strongly recommend that you use this approach in the beginning. 
-You can find a complete description of this in our yaktor-docs repository on GitHub.
+We strongly recommend that you use this approach. The https://github.com/SciSpike/yaktor#readme[Yaktor readme] is a great source for getting started using Docker.
+
+However there may be reasons for running it outside of Docker. 
+To do so the minimum requirements are https://nodejs.org/en/[Node.js] and https://www.mongodb.com[MongoDB]
 In this document we're aiming at helping those that for whatever reason do not want to use Docker.
 
 You are probably already familiar with Node.js development, and if you are, this is a simple +npm+ install.
 In addition, we depend on a code generator which we from the command line or run in an IDE called Eclipse.
 
-There are two distinct roles as well a link:#developer-role[Developer Role] and a link:business-role[Business Role]
+There are two distinct roles as well a link:#developer-role[Developer Role] and a link:#business-role[Business Role]
 
-== Required Tools
+== Development Tools
 
 * Eclipse
   ** Install the latest version of http://www.eclipse.org/downloads/[Eclipse]. If you prefer, you could instead install the latest version of Spring Tool Suite, Nodeeclipse, Enide, or any other IDE based on Eclipse.
@@ -27,15 +29,15 @@ For "Work with", select *--All Available Sites--* and install the _JavaScript De
 +
 Select the update site you just added for "Work with" and install the _Xtext SDK_ plugin. Ensure that the version selected is at least 2.5. Otherwise you will run into conflicts in the next step.
 +
-. Finally, add another update site for the Yaktor plugins: http://scispike-elearning.com/conversation/update.all/
+. Finally, add another update site for the Yaktor plugins: http://yaktor.io/eclipse
 +
 Select the update site you just added for "Work with" and install both the _Conversation_ and _Domain_ plugins.
-+
 
 * Node.js
   .. Install the latest version of http://nodejs.org/download/[Node.js]
   .. If you already have Node.js installed, ensure that the version is >= v0.10
   .. +npm+ is a command line package manager for Node.js. It should have been automatically installed with the Node.js installation but you can use the following command to ensure it is installed.
+  .. ensure you `export PATH=node_modules/.bin:$PATH`
 +
 [source,bash]
 ---------
@@ -43,37 +45,7 @@ npm help
 ---------
 +
 * MongoDB
-  .. Install the latest version of http://docs.mongodb.org/manual/installation/[MongoDB]
-* Cassandra
-  .. Install the latest version of http://www.datastax.com/documentation/getting_started/doc/getting_started/gsInstallCassandra.html[Cassandra]
-  ... http://www.datastax.com/documentation/getting_started/doc/getting_started/gettingStartedWindows_t.html[Windows]
-  ... http://www.datastax.com/documentation/getting_started/doc/getting_started/gettingStartedTar_t.html[Mac or Linux]
-  .. Start Cassandra
-+
-[source,bash]
----------
-sudo nohup ${CASSANDRA_DIR}/bin/cassandra
----------
-+
-  .. Open the Cassandra Shell (+cqlsh+)
-+
-[source,bash]
----------
-${CASSANDRA_DIR}/bin/cqlsh
----------
-+
-  .. Run the following command to create the "engine" Keyspace
-+
-[source,cql]
----------
-create keyspace engine with REPLICATION = {'class':'SimpleStrategy','replication_factor':1};
----------
-
-[IMPORTANT]
-.Requires jdk1.7
-=====
-Cassandra 2.x requires that you have JAVA7 available, either via +JAVA_HOME+ or +java -version+
-=====
+  .. Install the latest version of http://docs.mongodb.org/manual/installation/[MongoDB]\
 
 == Business Role
 
@@ -96,133 +68,36 @@ npm install
 
 === Install/Creating Conversation
 
-In some instances you may be responsible for creating conversations. You will need
-some tools installed before hand which will facilitate this process.
-To install the tools you must first obtain an oAuth token.
-This token can be obtained from SciSpike.
-The token gives you read access to the conversation engine's
-module library.
-
-Let's say you get a key like: \_KEY_KEY_KEY_.
+In some instances you may be responsible for creating conversations. The process is simple. Here it is:
 
 [source,bash]
 ---------
-npm install -g https://_KEY_KEY_KEY_:x-oauth-basic@github.com/yaktor/yaktor/tarball/<someVersion> # <1>
+mkdir <someName> # <1>
+cd <someName>
+npm install yaktor@<version> # <2>
+yaktor init # <3>
 ---------
-<1> where +<someVersion>+ is a version name/number like master or v2.0.0
+<1> where `<someName>` is the name of the project you wish to create
+<2> where `<version>` is a version name/number like `latest` or `2.0.0`
+<3> you should run `yaktor init` every time you install a new version of yaktor
 
-Once you have the tools installed simple create as many projects as you need
-
-[source,bash]
----------
-conversation create <someName> # <1>
----------
-<1> where +<someName>+ is the name of the project you wish to create
-
-
-=== Staying update to date
-
-As frequently as you are directed (by the powers that be) update the eclipse plugin and
-from the context of the project:
-
-[source,bash]
----------
-conversation migrate
----------
-
-=== Moving to a new version
-If you created/maintain a conversation project you may from time to time need to update thing.
-The first thing you must do is change the version of the conversation as it is specified in the package.json
-
-[source,js]
-.simplified package.json
----------
-{
-  "dependencies": {
-    "conversation": "https://_KEY_KEY_KEY_:x-oauth-basic@github.com/yaktor/yaktor/tarball/v1.2.3"       // <1>
-  },
-  "version": "0.0.1",
-  "private": true,
-  "name": "simplified"
-}
----------
-<1> a change could be from +.../tarball/v1.2.3+ to +.../tarball/v1.2.4+ in order to increase by one minor version.
-
-Once you have bumped the version you would follow the instructions found in link:#staying-update-to-date[Staying update to date].
 
 == Developer Role
 
 This is not any regular developer, but rather someone who is contributing to the Yaktor projects (i.e. yaktor or yaktor-ui-angular1).
 
-Also for those creating conversation based projects you will need to link:#install-conversation[Install Yaktor] in order to create Yaktor projects.
-
-If you don't have the ability to do this than you aren't in this role :)
-
-=== Install Conversation
-
-In order to get immediate access to the changes you are making to Yaktor code you must have a few things in place first.
-This must be done precisely, otherwise you will get unexpected results.
-
-The first thing you must do is get access to the Yaktor repos and any other tools you need.
-Then you must globally install your checked out copy of Yaktor for npm.
-
+To build/test `yaktor` simply:
 [source,bash]
 ---------
-git clone git@github.com:yaktor/yaktor.git
-cd yaktor
-sudo npm link # <1>
-cd ~/dev
-yaktor create test123 # <2>
-cd ~/dev/someExistingProjectYouWantToTestYourChangeIn
-yaktor migrate -d # <3>
-yaktor migrate -d # <4>
+npm install <somePath> # <1>
+yaktor init
 ---------
-<1> Once you have linked the project you can create
-<2> Now you can create some projects to test your changes in
-<3> You may want to convert some existing project into a test bed for your changes. You probably should
-update the project according to link:#moving-to-a-new-version[Moving to a new version] so that everyone else can benefit from your changes.
-<4> A second yaktor migrate is necessary as the first one simply updated your project to have things symlinked, and likely didn't use the global install.
+<1> where `<somepath>` is the actual path to your yaktor source code
 
-[WARNING]
-.Not a engine-ui developer?
-====
-If you are not developing yaktor-ui-angular1 you need to then install yaktor-ui-angular1 globally. Or just
-follow the instructions to link:#setup-for-engine-ui-development[Setup for yaktor-ui-angular1 development].
-====
+=== Yaktor validation
 
+All development and validation is done using Docker. Please see the https://github.com/SciSpike/yaktor[yaktor git repo].
 
-=== Setup for Engine-UI development
-. First, clone the following repository:
-+
-[source,bash]
----------
-git clone git@github.com:yaktor/yaktor-ui-angular1.git
-cd yaktor-ui-angular1
-sudo npm link
----------
-+
-. Go to [all] projects you are wanting to use your uncommited changes and run the following command:
-+
-[source,bash]
----------
-npm link yaktor-ui-angular1
----------
-
-== Create a new project
-
-To create a new project, run the following commands from a convenient directory in which you want the new project.
-
-[source,bash]
------------
-yaktor create NEW_PROJECT_NAME
-cd NEW_PROJECT_NAME
------------
-
-[WARNING]
-.Fail
-=====
-Of course you should replace *NEW_PROJECT_NAME* with the names of your project and directory.
-=====
 
 == Import your project into Eclipse
 
@@ -238,13 +113,7 @@ To do so, you must:
 The application has a sample dsl file.
 The example is simple and if everything is working, you should be all set.
 
-There are two services that must run for the application to work.
-
-. Cassandra.
-To start up Cassandra you'll have to go into the bin directory where you expanded Cassandra and run (you may have to run as sudo):
-
-	./cassandra
-
+Start essential services
 . Mongo
 If you followed the Mongo installation, you should have mongo on your path.You may have to run as sudo:
 

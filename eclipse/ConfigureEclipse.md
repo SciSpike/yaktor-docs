@@ -9,13 +9,13 @@ The editor supports features such as:
 
 - Syntax highlighting
 - Incremental parsing (allows you to see errors immediately while typing)
-- Autocompletion (Try `Ctr-Space`)
+- Autocomplete (Try `Ctr-Space`)
 - Outlines
-- Clickthrough to navigate to referenced elements
+- Click-through to navigate to referenced elements
 - Incremental compile
 - etc.
 
-## Dowload eclipse
+## Download eclipse
 
 The first thing to do is to download a version of Eclipse that fits your need. 
 Pretty much any version of Eclipse will do. 
@@ -23,7 +23,7 @@ Pretty much any version of Eclipse will do.
 We would recommend perhaps downloading one of the versions that supports JavaScript development.
 However, you may also download any of the other versions and then extend it later.
 
-You can find al the eclipse versions at www.eclipse.org.
+You can find all the eclipse versions at www.eclipse.org.
 
 ## Add the Yaktor Features
 
@@ -47,10 +47,10 @@ If the installation of the Yaktor features should fail (usually because it can't
 
 If you succeeded to install the features, you should now be able to import one of your projects and try out the editors.
 
-The easiest way to get started is to take one of your project and import them by using the folliwng steps:
+The easiest way to get started is to take one of your project and import them by using the following steps:
 
 1. Select `File --> Import`
-2. Select 'Existing Projects into Workspace` and press `Next`
+2. Select `Existing Projects into Workspace` and press `Next`
 3. Browse to the directory where you have your Yaktor project and press `Finish`
 
 You should now be able to open the `cl` and `dm` files using the Yaktor editors.
