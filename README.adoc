@@ -1,0 +1,66 @@
+image:logo-with-text.png[Yaktor Logo]
+
+[[documentation]]
+Documentation
+-------------
+
+[[introduction]]
+Introduction
+~~~~~~~~~~~~
+
+This is the documentation for the Yaktor tools and framework.
+
+The documentation may currently be slightly out of date because of the move to open source and the introduction of docker.
+We are updating the documentation and will try to make sure that the documentation remains accurate.
+
+If you find errors in the documentation, please let us know!
+
+[[getting-started]]
+Getting started
+~~~~~~~~~~~~~~~
+
+There are multiple ways of getting started with Yaktor.
+
+* **The easy way**: Use Docker
+* Install Docker
+* Pull the [yaktor image] (https://hub.docker.com/r/yaktor/yaktor/) from the Docker Hub
+* **The hard way**: Install the dependencies one-by-one, which requires separate installations of:
+* Node.js
+* MongoDB
+* Java
+* Ruby
+* ActiveMQ
+* AsciiDoctor
+* Graphviz
+* Cassandra
+
+For now, we’ll focus on the easy way. Follow link:DockerInstall.md[these steps] to get started.
+
+[[documentation-site]]
+Documentation site
+~~~~~~~~~~~~~~~~~~
+
+In addition to this repository, we have a website where we generate documentation from this repository.
+
+The documentation site can be found at http://yaktor.io
+
+[[install-the-editors]]
+Install the editors
+~~~~~~~~~~~~~~~~~~~
+
+Your productivity may increase significantly by using Yaktor’s custom editors.
+
+link:eclipse/ConfigureEclipse.md[This article] explains how to get the editors up and running.
+
+[[tutorials]]
+Tutorials
+~~~~~~~~~
+
+Here are some tutorials:
+
+* link:DockerInstall.md[Installing Yaktor on Docker]
+* link:YaktorInitialTemplate.md[Understand the demo.cl file]
+
+You can also read some more about Yaktor by browsing the documents in this repository (see under documentation/src/asciidoc/)
+
+We are also generating a more stylish version of the above link here http://scispike-elearning.com/yaktor/docs/ (we are working on the CI pipeline for the generation of the documentation. If it is down, we apologize. Please check back in a few hours and it’ll be there…)

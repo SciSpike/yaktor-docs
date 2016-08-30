@@ -1,0 +1,252 @@
+image::logo-with-text.png[Yaktor,200,200]
+
+= Reference Guide
+:docVersion: 0.1.0
+:idprefix:
+:idseparator: -
+:yaktorNodeDockerTag: 0.39.0
+
+*Authors*: Petter Graff, Jonathan Kamke, Barrett Cervenka, Matthew Adams
+
+_Version: {docVersion}_, _Last Updated: {docdatetime}_
+
+== tl;dr
+Install link:https://www.docker.com[Docker^] 1.11 or later, then create a new or work on an existing Yaktor application.
+
+[cols="2", options="header]
+|===
+^| New Application ^| Existing Application
+
+a|
+[source,sh,options="nowrap",subs="attributes"]
+----
+$ mkdir myapp && cd myapp                        <1>
+$ docker run -it --rm --user node \
+  -v "$PWD":/app --entrypoint bash \
+  yaktor/node:{yaktorNodeDockerTag} -c \
+  'npm install yaktor && $(npm bin)/yaktor init' <2>
+$ ./yak gen-src gen-views start                  <3>
+----
+<1> Create & change into new app directory
+<2> Initialize Yaktor application (alias this?)
+<3> Generate source & views then start app
+
+a|
+[source,sh,options="nowrap"]
+----
+$ git clone ...                 <1>
+$ cd ...                        <2>
+$ ./yak gen-src gen-views start <3>
+----
+<1> Get source
+<2> Change into source directory
+<3> Generate source & views then start app
+|===
+
+To see the generated application UI, open http://www.myapp.yaktor in a browser.
+
+== Part I. Documentation
+This section provides a brief overview of the Yaktor reference documentation.
+
+=== About
+This reference guide is available in source form in Github at
+https://github.com/SciSpike/yaktor-docs/blob/master/documentation/src/asciidoc/reference/index.adoc
+or on the Yaktor docs site at http://yaktor.io.
+
+=== Getting help
+If you need help with Yaktor, it's available.
+
+* Try the FAQs (TODO) for answers to the most common questions.
+* Ask questions with the tag `yaktor` on http://www.stackoverflow.com.
+* Discuss Yaktor at link:https://gitter.im/SciSpike/yaktor[Gitter].
+(Yaktor committer hours vary but are generally U.S. business hours.)
+
+=== First steps
+* <<requirements>> | <<installation>>
+* Tutorials (TODO)
+
+=== Working with Yaktor
+Ready to start working with Yaktor? Then start <<writing-code,writing some code>>!
+
+== Part II. Getting Started
+This section introduces the basic concepts behind Yaktor.
+
+=== Introducing Yaktor
+Yaktor is a tool to assist in the rapid creation of highly scalable applications.
+It leverages domain-specific languages (DSLs) that decouple much of the business logic from the actual implementation technology.
+In this way, your application is future-proofed against changes in technology; as new technologies & patterns emerge, the Yaktor team (or your team) can define new Yaktor mappings to generate code according to each technology's syntax & best practices.
+
+IMPORTANT: Although Yaktor includes a code generator, it has been designed to preserve any code customizations you make.  See <<reentrant-code-generation,the section on code customization>> for more information.
+
+Yaktor was originally prototyped with a Spring Roo mapping, so it supported Spring-based Java technology.
+The Spring Roo mapping was later abandoned in favor of using Node.js and its ecosystem.
+Yaktor's Node.js mapping is currently the primary (and only) supported mapping.
+The Yaktor team is considering other mappings, including Spring Boot-based Java, Scala, and others.
+
+Further, Yaktor leverages a feature-based design.
+The Yaktor team has authored features that can be added to existing Yaktor-based applications.
+For example, if your Yaktor Node.js application needs authentication & authorization, you can use link:https://github.com/SciSpike/yaktor-auth[`yaktor-auth`] to add those features.
+Other development teams can add other Yaktor features as well, since Yaktor is open source.
+
+=== Requirements
+There are two ways that you can run Yaktor applications:
+
+* by <<Using-Docker,using Docker>>, our recommended approach, or
+* by <<Running-Natively,installing all prerequisite software and running natively>> on your platform.
+
+==== Using Docker
+The minimum requirement to use Yaktor with Docker is to have link:https://www.docker.com[Docker] 1.11 or later installed.
+
+NOTE: Yaktor is supported on *Docker Toolbox 1.11 with VirtualBox or Dlite*, or *Docker for Mac*, *Docker for Windows*, or *Docker for Linux* 1.12 or later.
+Running Yaktor on prerelease or other versions of Docker is unsupported.
+
+Make sure that you have Docker installed and configured for your environment, then continue to <<Installation>>.
+
+==== Running Natively
+The minimum requirements to run Yaktor applications natively on your platform include:
+
+* link:https://nodejs.org[Node.js] 4.x or later
+* link:https://www.mongodb.com[MongoDB] 3.0.4 or later
+
+Additional, optional dependencies include
+
+* link:http://cassandra.apache.org[Cassandra] 2.1 or later (for event stream storage)
+* link:http://zeromq.org[ZeroMQ] ??? or later, for ???
+
+Make sure that you have these dependencies installed and configured for your environment, then continue to <<Installation>>.
+
+=== Installation
+There are two types of Yaktor installations: <<Installation-with-Docker,Docker>> & <<Native-installation,native>>.
+
+==== Installation with Docker
+Installation with Docker is almost a misnomer, thanks to beauty of Linux containers.
+We've already prepared Docker images that contain all of Yaktor's requirements & dependencies.
+If you've already gotten Docker installed & configured, then your Yaktor installation steps are complete.
+Move on to <<Writing-Code,writing code>>!
+
+==== Native installation
+TODO
+
+=== Writing code
+This section details how to get started authoring a Yaktor application.
+
+==== Brand new Yaktor project
+If you're using Docker to create a new Yaktor project, see <<New-Yaktor-project-with-Docker,new Yaktor application with Docker>>.
+
+If you're running natively, see <<,new native Yaktor application>>.
+
+===== New Yaktor project with Docker
+[source,sh]
+----
+$ mkdir myapp <1>
+$ cd myapp <2>
+$ docker run -it --rm --user node \
+  -v "$PWD":/app --entrypoint bash yaktor/node:0.39.0 \
+  -c 'npm install yaktor && $(npm bin)/yaktor init' <3>
+$ ./yak gen-src gen-views <4>
+----
+<1> Create a directory to hold your Yaktor application.
+<2> Change into the Yaktor application directory.
+<3> Initialize a new Yaktor application in the current directory using the `yaktor/node` image.
+<4> Use the `yak` command to generate source & views.
+
+At this point, simply open a text editor in directory `myapp` and start poking around the code, or you can <<Starting,start & view the app>> in action.
+
+TIP: You should consider using our eclipse plug-in at http://yaktor.io/eclipse, which includes an intelligent editor for the Yaktor DSLs.
+
+===== New native Yaktor project
+[source,sh]
+----
+$ mkdir myapp <1>
+$ cd myapp <2>
+$ npm install yaktor && $(npm bin)/yaktor init <3>
+$ npm run gen-src gen-views <4>
+----
+<1> Create a directory to hold your Yaktor application.
+<2> Change into the Yaktor application directory.
+<3> Initialize a new Yaktor application in the current directory.
+<4> Generate source & views.
+
+At this point, simply open a text editor in directory `myapp` and start poking around the code, or you can <<Starting,start & view the app>> in action.
+
+TIP: You should consider using our eclipse plug-in at http://yaktor.io/eclipse, which includes an intelligent editor for the Yaktor DSLs.
+
+==== Coming aboard an existing Yaktor project
+If you're using Docker to create a new Yaktor project, see <<Onboarding-with-Docker,onboarding with Docker>>.
+
+If you're running natively, see <<Onboarding-natively,onboarding natively>>.
+
+===== Onboarding with Docker
+[source,sh]
+----
+$ git clone ... <1>
+$ cd ... <2>
+$ ./yak gen-src gen-views <3>
+----
+<1> Clone the source repository containing the Yaktor application via git, svn, etc.
+<2> Change into the Yaktor application directory.
+<3> Use the `yak` command to generate source & views.
+
+At this point, simply open a text editor in directory `myapp` and start poking around the code, or you can <<Starting,start & view the app>> in action.
+
+TIP: You should consider using our eclipse plug-in at http://yaktor.io/eclipse, which includes an intelligent editor for the Yaktor DSLs.
+
+===== Onboarding natively
+[source,sh]
+----
+$ git clone ... <1>
+$ cd ... <2>
+$ npm install <3>
+$ npm run gen-src gen-views <4>
+----
+<1> Clone the source repository containing the Yaktor application via git, svn, etc.
+<2> Change into the Yaktor application directory.
+<3> Install node modules.
+<4> Generate source & views.
+
+At this point, simply open a text editor in directory `myapp` and start poking around the code, or you can <<Starting,start & view the app>> in action.
+
+TIP: You should consider using our eclipse plug-in at http://yaktor.io/eclipse, which includes an intelligent editor for the Yaktor DSLs.
+
+=== Starting
+This section describes how to start & view a Yaktor-based application.
+This will be done either using <<Starting-with-Docker,Docker>> or <<Starting-natively,running natively>>.
+
+==== Starting with Docker
+If you're using Docker, then starting
+
+==== Starting natively
+
+== Architecture
+
+=== Software agents
+
+=== State machines
+
+=== Lambda architecture
+
+==== Event stream
+
+==== Data persistence
+
+=== Core platform
+
+=== Feature-based modules
+
+==== Authorization
+
+==== Event streaming
+
+== Reentrant code generation
+
+=== DSLs
+
+=== Technology-specific mappings
+
+==== Node.js mapping
+
+===== Source organization
+
+===== Configuration
+
+===== Code customization

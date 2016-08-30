@@ -2,21 +2,23 @@
 
 == Introduction
 
-Yaktor is a suite of tools and methods for producing web applications. Yaktor builds on top of existing technologies in order to produce the best applications possible. However it also has lots of features and benefits over using the supported frameworks by themselves. 
+Yaktor is a suite of tools and methods for producing highly scalable web applications.
+Yaktor builds on top of existing technologies in order to produce the best applications possible.
+However, it also has lots of features and benefits over using those existing technologies by themselves.
 
-The documentation consists of two kinds of documents:
+The documentation consists primarily of
 
-* Reference documentation
+* Reference Documentation
 * Tutorials
 
-There are two tools that you would need to learn:
+The two most important things to learn are Yaktor's domain-specific languages (DSLs):
 
-* The domain modeling language
-* The conversation language
+* The domain modeling DSL
+* The conversation DSL
 
-The domain modeling language is used to define a canonical information model for the problem domain the project is solving.
+The domain modeling DSL is used to define a canonical information model for the problem domain the project is solving.
 
-The conversation language is used to define the behavior of the application.
+The conversation DSL is used to define the behavior of the application.
 
 == I'm A Newbie. What Do I Do?
 

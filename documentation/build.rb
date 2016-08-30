@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 #sudo ARCHFLAGS="-Wno-error=unused-command-line-argument-hard-error-in-future" gem install asciidoctor-diagram
 require 'rubygems'
 
