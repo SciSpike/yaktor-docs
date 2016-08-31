@@ -1,6 +1,4 @@
-image::logo-with-text.png[Yaktor,200,200]
-
-= Reference Guide
+= Yaktor Reference Guide
 :docVersion: 0.1.0
 :idprefix:
 :idseparator: -
@@ -18,12 +16,12 @@ Install link:https://www.docker.com[Docker^] 1.11 or later, then create a new or
 ^| New Application ^| Existing Application
 
 a|
-[source,sh,options="nowrap",subs="attributes"]
+[source,sh,options="nowrap"]
 ----
 $ mkdir myapp && cd myapp                        <1>
 $ docker run -it --rm --user node \
   -v "$PWD":/app --entrypoint bash \
-  yaktor/node:{yaktorNodeDockerTag} -c \
+  yaktor/node:0.39.0 -c \
   'npm install yaktor && $(npm bin)/yaktor init' <2>
 $ ./yak gen-src gen-views start                  <3>
 ----
