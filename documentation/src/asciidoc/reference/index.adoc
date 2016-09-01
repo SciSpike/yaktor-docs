@@ -32,7 +32,7 @@
 
 _Version: {docVersion}, Last Updated: {docdatetime}_
 
-== Part I. Meta-Documentation
+== Meta-Documentation
 This section provides a brief overview of the Yaktor reference documentation itself.
 
 === About
@@ -55,7 +55,7 @@ If you need help with Yaktor, it's available.
 === Working with Yaktor
 Ready to start working with Yaktor? Then <<writing-code,write some code>>!
 
-== Part II. Getting Started
+== Getting Started
 This section aims to quickly get you up & running with Yaktor using its {nodejs} mapping.
 
 === tl;dr
@@ -262,7 +262,7 @@ $ npm run start
 
 At this point, you are ready to begin editing your Yaktor application.  It's crucial that you understand <<yaktor-domain-specific-languages,Yaktor's DSLs>> and <<technology-specific-mappings,technology mappings>>, so make sure you <<yaktor-domain-specific-languages,check them out>>.
 
-== Part III. Overview of Yaktor Domain-Specific Languages & Technology Mappings
+== Overview of Yaktor Domain-Specific Languages & Technology Mappings
 This section only describes the high-level concepts behind a Yaktor application.
 For a comprehensive treatment, see XXX.
 
@@ -370,7 +370,7 @@ To secure your Yaktor application, change into the application's root directory 
 ./yak yaktor-auth secure
 ----
 
-== Part IV. Yaktor Architecture
+== Yaktor Architectural Overview
 This section provides a high-level, conceptual overview of Yaktor's architecture.
 
 === Software agents
@@ -391,8 +391,30 @@ TODO: briefly describe how domain models are persisted.
 === Core platform
 TODO: briefly describe the features of the core platform.
 
-== Part V. Yaktor DSL Reference
+== Reference
+This section provides a complete reference of the Yaktor DSLs and technology mappings.
+It includes the following sections:
 
-=== Yaktor domain model DSL reference
+* DSLs
+** <<domain-model-dsl-reference>>
+** <<conversation-dsl-reference>>
+* Technology mappings
+** <<node-js-mapping-reference>>
 
-=== Yaktor conversation DSL reference
+=== DSL reference
+This section contains the complete reference of the Yaktor DSLs.
+
+==== Domain model DSL reference
+TODO: complete domain model DSL reference here
+
+==== Conversation DSL reference
+TODO: complete conversation DSL reference here
+
+=== Node.js mapping reference
+This section contains the complete reference of the Yaktor {nodejs} mapping.
+
+==== Directory structure
+TODO: complete description of the Node.js directory structure, including generated & non-generated source directories.
+
+==== Code customization
+TODO: complete description of the gap pattern & its implementation in the Node.js mapping.
