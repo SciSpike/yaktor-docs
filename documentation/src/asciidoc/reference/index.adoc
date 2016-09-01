@@ -1,7 +1,13 @@
 = Yaktor Reference Guide
 :docVersion: 0.1.0
+:toc:
+:toclevels: 4
 :idprefix:
 :idseparator: -
+:sectanchors:
+:sectlinks:
+:sectnums:
+:sectnumlevels: 6
 :yaktorNodeDockerTag: 0.39.0
 :nodejs: link:http://nodejs.org[Node.js^]
 :springroo: link:http://projects.spring.io/spring-roo[Spring Roo^]
@@ -20,12 +26,13 @@
 :akka: link:http://akka.io[Akka^]
 :scala: link:http://scala-lang.org[Scala^]
 :java: link:http://www.java.com[Java^]
+:passportjs: link:http://passportjs.org[Passport^]
 
 *Authors*: Petter Graff, Jonathan Kamke, Barrett Cervenka, Matthew Adams
 
 _Version: {docVersion}, Last Updated: {docdatetime}_
 
-== Part I. Meta
+== Part I. Meta-Documentation
 This section provides a brief overview of the Yaktor reference documentation itself.
 
 === About
@@ -318,14 +325,53 @@ However, the team will continue to consider other mappings, in particular, {spri
 NOTE: Although it would be ambitious, anyone could create a Yaktor technology mapping.
 
 ==== Node.js mapping
-The {nodejs} mapping is Yaktor's primary mapping.  This section attempts to give a brief treatment of a project's <<source-organization, source organization>> & how the Node.js code generation technique supports <<code-customization, code customization>>.
+The {nodejs} mapping is Yaktor's primary mapping.
+This section attempts to give a brief treatment of a project's <<source-organization, source organization>> & how the Node.js code generation technique supports <<code-customization, code customization>>.
 
 NOTE: See <<TODO,here>> for the full Yaktor {nodejs} mapping reference.
 
 ===== Source organization
+TODO: briefly describe the directory structure of a Yaktor app after generating source & views
 
+===== Feature-based modules
+Yaktor leverages a design whereby functionality can be orthogonally added to a Yaktor application on a feature-by-feature basis.
+Currently, there are two officially supported Yaktor feature modules of the {nodejs} mapping:
+
+* <<cassandra-event-streaming-persistence>>
+* <<security>>
+
+====== Cassandra event streaming persistence
+All events and state transitions that take place within Yaktor conversations can be persisted.
+This module persists this information into a set of Cassandra tables.
+This provides you with the ability to replay conversations for recovery or offline analysis.
+
+TIP: Before adding features to your Yaktor application, ensure that it is under source control so that it's easy to roll back the code if necessary.
+A simple `git init` followed by `git commit -a -m "bang"` would suffice; Yaktor provides a `.gitignore` file out of the box for your convenience.
+
+To add this feature, change into your Yaktor application's root directory and issue command
+
+[source,sh]
+----
+$ ./yak cassandra
+----
+
+====== Security
+Many web applications need authentication & authorization in order to prevent unauthorized access or use.
+Yaktor's {nodejs} mapping offers `yaktor-auth`, a feature module that adds {passportjs}-based security to your Yaktor application.
+
+TIP: Before adding features to your Yaktor application, ensure that it is under source control so that it's easy to roll back the code if necessary.
+A simple `git init` followed by `git commit -a -m "bang"` would suffice; Yaktor provides a `.gitignore` file out of the box for your convenience.
+
+To secure your Yaktor application, change into the application's root directory and issue command
+
+[source,sh]
+----
+./yak npm install yaktor-auth
+./yak yaktor-auth secure
+----
 
 == Part IV. Yaktor Architecture
+This section provides a high-level, conceptual overview of Yaktor's architecture.
 
 === Software agents
 TODO: briefly describe agents (& their predecessors, actors, here)
@@ -344,12 +390,6 @@ TODO: briefly describe how domain models are persisted.
 
 === Core platform
 TODO: briefly describe the features of the core platform.
-
-=== Feature-based modules
-
-==== Authorization
-
-==== Event streaming
 
 == Part V. Yaktor DSL Reference
 
