@@ -25,8 +25,8 @@
 
 _Version: {docVersion}, Last Updated: {docdatetime}_
 
-== Part I. Metadocumentation
-This section provides a brief overview of the Yaktor reference documentation.
+== Part I. Meta
+This section provides a brief overview of the Yaktor reference documentation itself.
 
 === About
 This reference guide is available in source form in Github at
