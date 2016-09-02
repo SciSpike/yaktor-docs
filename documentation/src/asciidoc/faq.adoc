@@ -1,0 +1,122 @@
+= Yaktor Frequently Asked Questions
+:idprefix:
+:idseparator: -
+:sectanchors:
+:sectlinks:
+:sectnums:
+:actormodel: https://en.wikipedia.org/wiki/Carl_Hewitt#Actor_model[Actor Model^]
+:docker: https://www.docker.com[Docker^]
+:dockeryaktorimage: https://hub.docker.com/r/yaktor/node
+
+== Why "agent", not "actor"?
+If you’re familiar with the {actormodel} from link:https://en.wikipedia.org/wiki/Carl_Hewitt[Carl Hewitt], you probably recognize the similarities between it & our model.
+Our `agent` is very similar to the {actormodel}’s `actor`.
+
+So why did we not use the keyword `actor` instead of `agent`?
+We’ve had numerous discussions around this topic.
+Basically, we concluded that they are different enought to merit a separation.
+
+Here are some of the differences between an `actor` & and our `agent`:
+
+* Agents prefer broadcast protocols (point-to-point is an exception and the receivers have no implicit knowledge of the sender).
+* Agents collaborate to conclude a conversation.
+* Agents are always created implicitly as a result of the specification of the conversation
+
+This is not to say that we don’t credit Hewitt's work for the original {actormodel}.
+We are clearly standing on the shoulders of giants.
+Our main reason for not using the keyword `actor` is primarily the risk of confusion.
+
+We hope the name `Yaktor` will send sufficient credit in the direction of the giants behind the {actormodel}.
+
+== Why can’t I run your Docker image?
+The most common reason for problems that we’ve seen with our {docker} {dockeryaktorimage}[image] is that someone has an older version of {docker} that doesn’t work with the latest `docker-compose` schema.
+We have tested extensively using *Docker Toolbox* 1.11 (with both the VirtualBox & Dlite installation variants).
+We also tested with later versions of {docker}, which, as of version 1.12, comes as *Docker for Mac*, *Docker for Windows* & *Docker for Linux*.
+A good first step would be to upgrade to Docker version 1.11 or later.
+If you believe you have a good version running and you still have problems, link:https://gitter.im/SciSpike/yaktor[let us know^] and we’ll try to debug the problem with you.
+
+== How do I get to the domain model data in MongoDB?
+You may run the `mongo` client locally by pointing it to `mongo.${APP_NAME}.yaktor`, where `APP_NAME` is the name of your application (usually the same as the name of the directory containing your application).
+You can just issue the following command _if you're currently in your Yaktor application's root directory_:
+
+[source]
+----
+$ mongo mongo.${PWD##*/}.yaktor # (that's Bash magic for "basename of current directory")
+----
+
+For example, if your application name is `test`:
+
+[source]
+----
+$ mongo mongo.test.yaktor
+MongoDB shell version: 3.2.4
+connecting to: mongo.yakapp.yaktor/test
+>
+----
+TIP: Remember to type `Ctrl-D` to exit the `mongo` client.
+
+Another way, is to use the `mongo` client in the running MongoDB container itself.
+To do so, start by finding your MongoDB container name:
+
+[source,bash]
+----
+$ docker ps
+----
+
+Your output will be something similar to this (you might have to scroll right):
+[source,bash,options="nowrap"]
+----
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                     NAMES
+f8bb578b2585        test:master         "/yaktor.sh 'tail -f "   27 hours ago        Up 2 hours                                    test_app_1
+7cad93128d1a        bobrik/socat        "socat -d TCP-LISTEN:"   27 hours ago        Up 2 hours          0.0.0.0:32768->4444/tcp   test_vpn_1
+b0cb5d375f83        mongo:3.0.4         "/entrypoint.sh mongo"   27 hours ago        Up 2 hours          27017/tcp                 test_mongo_1
+1c373f1646fc        andyshinn/dnsmasq   "dnsmasq -k --max-cac"   27 hours ago        Up 2 hours          53/tcp, 53/udp            test_dns_1
+----
+
+You’ll see the MongoDB container named `${APP_NAME}-mongo_1` in the last column (you might have to scroll right).
+Next you can start the `mongo` client using the `docker` command.
+
+[source,bash]
+----
+$ docker exec -it ${APP_NAME}_mongo_1 mongo
+----
+
+For example, say my project is named `test`. The command would be:
+
+[source,bash]
+----
+$ docker exec -it test_mongo_1 mongo
+MongoDB shell version: 3.0.4
+connecting to: test
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+       	http://docs.mongodb.org/
+Questions? Try the support group
+       	http://groups.google.com/group/mongodb-user
+>
+----
+
+TIP: Remember to type `Ctrl-D` to exit the `mongo` client.
+
+You can also add the database name as a parameter if you want to start in a database.
+
+== How do I get to the event stream data?
+By default, we write it to the Yaktor log at log level `silly`.
+One nice way to isolate the activity logs is to pipe the log through a grep for `auditLogger`.
+
+For example, if you started your server with:
+
+[source,bash]
+----
+$ ./yak start > logfile.txt
+----
+
+You may for instance look at the audit log by running the following in a separate process:
+
+[source,bash]
+----
+$ tail -f logfile.txt | grep auditLogger
+----
+
+Alternatively, if you're capturing the event stream in Cassandra, you can employ a similar strategy as <<how-do-i-get-to-the-domain-model-data-in-mongodb,the one for MongoDB>>, except use your own `cassandra` client connecting to  `cassandra.${APP_NAME}.yaktor`, or use the `cassandra` client inside the container named `cassandra_${APP_NAME}_1`.
