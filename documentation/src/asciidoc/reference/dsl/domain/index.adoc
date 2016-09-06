@@ -1,14 +1,22 @@
 = Yaktor Domain Modeling DSL Reference
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:toc: left
+:toclevels: 4
+:idprefix:
+:idseparator: -
+:sectanchors:
+:sectlinks:
+:sectnums:
+:sectnumlevels: 6
 
 == Introduction
 
-Yaktor is a tool that leverages two domain-specific languages:  a domain modeling language and a link:../conversation/index{outfilesuffix}[conversation] language.
+Yaktor is a tool that leverages two domain-specific languages:  a domain modeling language and a conversation language.
 This document describes the domain modeling language.
 
 In almost every software system there is a need for defining an information model.
 In most cases, these information models are the foundation for the schema for the persistent storage.
-Yaktor calls these models *Domain Models*.
+Yaktor calls these models *domain models*.
 
 In addition to providing the foundation for the schema governing persistence, the domain model is often created to share the link:http://martinfowler.com/bliki/UbiquitousLanguage.html[vocabulary and key concepts, or "ubiquitous language"^], of the problem domain.
 
@@ -83,7 +91,7 @@ The domain model allows you to specify the following type of elements:
 Let's take a look at an example:
 
 [source,dm]
------------------
+----
 domain-model MyDomainModel {
 
     type Address {              // <1>
@@ -107,7 +115,7 @@ domain-model MyDomainModel {
         Pet pets*         // <9>
     }
 }
------------------
+----
 <1> `type` defines a data structure, consisting of properties of simple types or other `type` s.
 <2> This is a simple example of a primitive property on the type `Address` of type `String` called `street`.
 The exclamation mark means the that the `street` property is required; in other words, all properties of type `Address` must have a `street`.
@@ -187,12 +195,12 @@ We currently support the following cardinalities:
 Each of the properties may define uniqueness. This is simply defined with the keyword `unique` succeeding the property definition.
 
 [source,dm]
---------
+----
 entity Person {
     String ssn! unique      // <1>
     String name!
 }
---------
+----
 <1> The `ssn` property is defined to be unique. That is, there should not be two instances of `entity` `Person` with the same `ssn` value.
 
 === Constraints on Strings
@@ -200,11 +208,11 @@ entity Person {
 
 ==== Reg-Ex Constraints
 [source,dm]
---------
+----
 entity Person {
     String ssn! pattern "^\\d{3}-\\d{2}-\\d{4}$"    // <1>
 }
---------
+----
 <1> The constraint on the `ssn` property is to be a valid US social security number.
 
 Notice that to constrain a string based on a reg-ex pattern, we simply provide the keyword `pattern` followed by a quoted string.
@@ -213,11 +221,11 @@ NOTE: When using regular expressions, backslashes must be escaped.
 
 ==== String Length Constraint
 [source,dm]
---------
+----
 entity Person {
     String lastName! [2..100]   // <1>
 }
---------
+----
 <1> The last name has to be at least 2 characters but no more than 100
 
 To specify the string length, use the following format:
@@ -236,12 +244,12 @@ The dates can be constrained to the past or future relative to the current syste
 
 ==== Past and Future
 [source,dm]
---------
+----
 entity Person {
     Date birthdate! past     // <1>
     Date nextFollowup future // <2>
 }
---------
+----
 <1> The `birthdate` property must be in the past.
 <2> The `nextFollowup` property must be in the future.
 
@@ -252,11 +260,11 @@ TBD (we're using the square bracket, but we don't seem to use it right now. We n
 `Integer` only supports a simple constraint defining a range.
 
 [source,dm]
---------
+----
 entity Person {
     Integer age [0..150]        // <1>
 }
---------
+----
 <1> The age is constrained to be a value between 0 and 150 (inclusive).
 
 To constrain an integer or a numeric to specified range, use square brackets and the format:
@@ -271,12 +279,12 @@ However, you may want to control the name or type of the `id` field throughout t
 To do so, simply define a unique key as follows:
 
 [source,dm]
---------
+----
 entity SomethingWithId {
     Id id                  // <1>
     key (id)               // <2>
 }
---------
+----
 <1> A field of any type or name, representing the unique key.
 <2> Describe which field you want to be the `key` of the `entity`.
 
@@ -285,10 +293,10 @@ The language also allows you to define enumerated types.
 An enumerated type allows you to define a domain consisting of a set of named values.
 
 [source,dm]
---------
+----
 enum Gender {                                         // <1>
-    M = "Biologically Male"                           // <2>
-    F = "Biologically Female"
+    M = "Biological Male Self-Identifying as Male"    // <2>
+    F = "Biological Female Self-Identifying as Female"
     MF = "Biological Male Self-Identifying as Female"
     FM = "Biological Female Self-Identifying as Male"
     HM = "Hermaphrodaic Self-Identifying as Male"
@@ -298,7 +306,7 @@ enum Gender {                                         // <1>
 entity Person {
     enum Gender gender!                                // <3>
 }
---------
+----
 <1> Declare an enumerated type called `Gender`.
 <2> Define the only valid values of the `enum` `Gender`.
 <3> The `Person` type defines that it has a `gender` field of type `Gender`.
@@ -323,7 +331,7 @@ NOTE: Although explicit `association` declarations are recommended, there are do
 
 === Using the `association` keyword
 [source,dm]
------------------
+----
 domain-model MyDomainModel {
 
     entity Pet {
@@ -340,7 +348,7 @@ domain-model MyDomainModel {
         Pet pets*                   // <4>
     }
 }
------------------
+----
 <1> Define an association named `PetOwnership`.
 <2> Define the originating type to be the `PetOwner` and the role it plays to be `owner`.
 <3> `<-->` indicates that the association is bidirectional.
@@ -361,13 +369,13 @@ We may want to be able to lookup the pets from the pet owner, but not allow for 
 If we wanted to define this, we would have to change the association as follows:
 
 [source,dm]
------------------
+----
 association PetOwnership {
     PetOwner owner!
     -->             // <1>
     Pet pets*
 }
------------------
+----
 <1> Using the `-->` associator to indicate that we believe the lookup would be only from owner to pets
 
 === Using the `ref` keyword
@@ -377,7 +385,7 @@ Let's say we want to define the same association as befroe (`PetOwner` to `Pet`)
 We could do so by simply defining an property on either side.
 
 [source,dm]
------------------
+----
 domain-model MyDomainModel {
 
     entity Pet {
@@ -389,13 +397,13 @@ domain-model MyDomainModel {
         ref Pet pets*               <1>
     }
 }
------------------
+----
 <1> Define the `PetOwner` will have a property which is a reference to all of its `pets`.
 
 An alternative, of course, would be to define the reference on the `Pet` side:
 
 [source,dm]
------------------
+----
 domain-model MyDomainModel {
 
     entity Pet {
@@ -407,7 +415,7 @@ domain-model MyDomainModel {
         String name!
     }
 }
------------------
+----
 <1> Define the relationship on the `pet` side of the association.
 Although somewhat imprecise, this indicates that the pet maintains a reference to its `owner`.
 
@@ -428,13 +436,13 @@ Because we have not specified the opposite cardinality, the code generator typic
 In our example, the generator would use:
 
 [source,dm]
------------------
+----
 association PetOwnership {
     PetOwner petOwner*    // <1>
     -->                   // <2>
     Pet pets*
 }
------------------
+----
 <1> We don't really know the cardinality or the role name.
 We use the more general case `*` ("0 or more") and guess that the role name is the same as the type `petOwner` in this case.
 <2> Unidirectional: navigability is from `petOwner` to `pets`
@@ -454,13 +462,13 @@ Let's say for instance that we have a location where we want the city name and s
 For example, since Rochester exists in both Minnesota and New York, the city name and state combination should always be unique.
 
 [source,dm]
------------------
+----
 entity City {
     String name!
     String state!
     unique-constraint name state    // <1>
 }
------------------
+----
 <1> The uniqueness constraint specifying that the combination of `name` and `state` should be unique
 
 To specify the cross-field uniqueness constraint, you must define the following:
@@ -476,12 +484,12 @@ The indexing is just a hint to the code generators.
 To suggest the use of indexing, simply add the keyword `indexed` to the property.
 
 [source,dm]
------------------
+----
 entity City {
     String name! indexed    // <1>
     String state!
 }
------------------
+----
 <1> Suggest to the code generators that `name` should be indexed.
 
 == Partition of Models
@@ -498,7 +506,7 @@ _ModelName_ `.` _TypeName_
 Here is a simple example:
 
 [source,dm]
------------------
+----
 import ForeignModel                             // <1>
 
 domain-model MyModel {
@@ -513,7 +521,7 @@ domain-model MyModel {
         ForeignModel.ForeignEntity fe!      // <3>
     }
 }
------------------
+----
 <1> Import another model called `ForeignModel`
 <2> Use the externally defined type called `ForeignType` in this model
 <3> Use the externally defined entity called `ForeignEntity` in this association.
@@ -534,7 +542,7 @@ Therefore, you _can_ have required fields in a subclass with `single-table-root`
 
 [source,dm]
 .Single table root example
------------------
+----
 domain-model Folks {
 
     node-mongo-options {
@@ -557,7 +565,7 @@ domain-model Folks {
       String badgeId              // <2>
     }
 }
------------------
+----
 <1> Specify that there should be a single storage location for `Person` and all of its subclasses.
 <2> This takes advantage of the fact that if you're using MongoDB, you can have a required field on a subclass even with `single-table-root`.
 
@@ -570,7 +578,7 @@ In some stores, TTL can be expressed as seconds past the date value of a field.
 
 [source,dm]
 .Fixed time to live example using MongoDB
------------------
+----
 domain-model FixedTimeToLive {
 
     node-mongo-options {
@@ -585,13 +593,13 @@ domain-model FixedTimeToLive {
       Date expires            // <2>
     }
 }
------------------
+----
 <1> We wish to delete records at a specified instant.
 <2> A field whose value specifies when the record should be removed.
 
 [source,dm]
 .Relative time to live example using MongoDB
------------------
+----
 domain-model RelativeTimeToLive {
 
     node-mongo-options {
@@ -606,7 +614,7 @@ domain-model RelativeTimeToLive {
       Date born             // <2>
     }
 }
------------------
+----
 <1> We wish to delete records after a specified time has passed.
 <2> A field whose value plus the `ttl` seconds could indicate when the record should be removed.
 
@@ -620,8 +628,3 @@ You'll find your model under your project root in the directory `src-gen/dot/dom
 
 There are multiple tools that can render this notation.
 We've tested with and recommend link:http://www.graphviz.org/[GraphViz^], a free tool.
-
-== Syntax Graph
-Here is a convenient graph of Yaktor's domain model DSL grammar:
-
-image::domainSyntaxGraph.png[]

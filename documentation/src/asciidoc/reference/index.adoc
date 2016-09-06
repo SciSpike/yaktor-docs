@@ -403,24 +403,15 @@ TODO: briefly describe how domain models are persisted.
 === Core platform
 TODO: briefly describe the features of the core platform.
 
-== Reference
-This section provides a complete reference of the Yaktor DSLs and technology mappings.
-It includes the following sections:
-
-* DSLs
-** <<domain-model-dsl-reference>>
-** <<conversation-dsl-reference>>
-* Technology mappings
-** <<node-js-mapping-reference>>
-
-=== DSL reference
+== Yaktor DSL Reference
 This section contains the complete reference of the Yaktor DSLs.
 
-==== Domain model DSL reference
-TODO: complete domain model DSL reference here
+include::dsl/domain/index.adoc[leveloffset=2]
 
-==== Conversation DSL reference
-TODO: complete conversation DSL reference here
+include::dsl/conversation/index.adoc[leveloffset=2]
+
+== Yaktor Technology Mapping Reference
+This section contains the complete reference of Yaktor's technology mappings.
 
 === Node.js mapping reference
 This section contains the complete reference of the Yaktor {nodejs} mapping.
