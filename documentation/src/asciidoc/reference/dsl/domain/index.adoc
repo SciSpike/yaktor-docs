@@ -1,6 +1,10 @@
-= Yaktor Domain Modeling Language
+= Yaktor Domain Modeling DSL Reference
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Introduction
+
+Yaktor is a tool that leverages two domain-specific languages:  a domain modeling language and a link:../conversation/index{outfilesuffix}[conversation] language.
+This document describes the domain modeling language.
 
 In almost every software system there is a need for defining an information model.
 In most cases, these information models are the foundation for the schema for the persistent storage.

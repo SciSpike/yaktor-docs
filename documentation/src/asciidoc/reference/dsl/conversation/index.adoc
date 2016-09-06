@@ -1,32 +1,31 @@
-:sectanchors:
-:icons: font
-
-= Conversation Language Reference
+= Yaktor Conversation DSL Reference
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Introduction
+Yaktor is a tool that leverages two domain-specific languages:  a link:../domain/index{outfilesuffix}[domain modeling language] and a conversation language.
+This document covers the semantics & grammar of the conversation language.
 
-Conversations are defined in files with the extension *.cl*.
-They are simple text files, but they have to follow a particular format.
-You may edit the text files with your favorite editor, but we strongly recommend that you use the Eclipse editor provided by Yaktor and that will provide you with autocompletion, syntax highlighting and other productivity features.
+Conversations are defined in a text file.
+The default extension is `.yc`.
+They are simple text files which abide by the conversation grammar.
 
-This document covers the semantics of the conversation language.
+TIP: You may edit the text files with any text editor, but we recommend that you use the Eclipse editor provided by Yaktor, which will provide you with autocompletion, syntax highlighting and other productivity features.
+
 For information regarding runtime concepts please see link:artifactsAndConcepts.html[Artifacts and Concepts]
-The conversation language may refer (in fact, typically refers) to another language, the Yaktor link:../../domain/reference/introduction.html[Domain Modeling Language].
+The conversation language refers to another language, the Yaktor link:../domain/index{outfilesuffix}[Domain Modeling DSL].
 
 == Conversation
 
 === Collaborative Distributed Behavior
 
-In the space of event-driven, asynchronous, distributed, multi-party, state-based behavior there is a significant gap in
-the ability to describe and constrain interaction between moving parts. Practically speaking the world of event based programming leans
-either toward the tight coupling of tradition pub/sub (coupled responses) or the loose coupling of a virtual chat room.
+In the space of event-driven, asynchronous, distributed, multi-party, state-based behavior, there is a significant gap in the ability to describe and constrain interaction between moving parts.
+Practically speaking the world of event based programming leans either toward the tight coupling of traditional pub/sub (coupled responses) or the loose coupling of a virtual chat room.
 
-Toward that end we provide both a communication grammar and conditional state-based behavior. Allowing user-agents (ie Web Clients or Web enabled devices)
-to connect to well ordered back-end services, receive data/updates, and indicate choices and activity. 
-Collaberation facilitated by the yaktor engine with automatic and decoupled as well as predictable and visually verifiable. 
-It also allows for the use of rich feature sets afforded by standard protocols like Ajax and WebSockets.
+Toward that end, we provide both a communication grammar and conditional state-based behavior, allowing user-agents, like web clients or web-enabled devices, to connect to well ordered back-end services, receive data/updates, and indicate choices and activity.
+Collaboration is facilitated by the Yaktor engine is predictable and as well as visually verifiable.
+It also allows for the use of rich feature sets afforded by standard protocols like link:https://en.wikipedia.org/wiki/Ajax_(programming)[AJAX^], link:https://en.wikipedia.org/wiki/WebSocket[WebSockets^] & link:http://mqtt.org/[MQTT^].
 
-In the end what we achieve is loosely coupled (like the chat room) but with out the chaos, or predictable pub/sub without the coupling.
+In the end, what we achieve predictable pub/sub without the coupling.
 
 === Conversation Example
 
