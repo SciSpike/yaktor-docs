@@ -1,6 +1,7 @@
 = Yaktor Reference Guide
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :docVersion: 0.1.0
-:toc:
+:toc: left
 :toclevels: 4
 :idprefix:
 :idseparator: -
@@ -8,12 +9,11 @@
 :sectlinks:
 :sectnums:
 :sectnumlevels: 6
-:yaktorNodeDockerTag: 0.39.0
+:yaktorNodeDockerTag: latest
 :nodejs: link:http://nodejs.org[Node.js^]
 :springroo: link:http://projects.spring.io/spring-roo[Spring Roo^]
 :docker: link:https://www.docker.com[Docker^]
-:stackoverflow: link:http://www.stackoverflow.com[Stack Overflow^]
-:gitter: link:https://gitter.im/SciSpike/yaktor[Gitter^]
+:stackoverflow: link:http://stackoverflow.com/questions/tagged/yaktor[Stack Overflow^]
 :spring: link:http://spring.io[Spring^]
 :npm: link:http://npmjs.org[npm^]
 :mongodb: link:https://www.mongodb.com[MongoDB^]
@@ -28,9 +28,13 @@
 :java: link:http://www.java.com[Java^]
 :passportjs: link:http://passportjs.org[Passport^]
 
-*Authors*: Petter Graff, Jonathan Kamke, Barrett Cervenka, Matthew Adams
+*Authors*
 
-_Version: {docVersion}, Last Updated: {docdatetime}_
+Petter Graff, Jonathan Kamke, Barrett Cervenka, Matthew Adams
+
+_Version: {docVersion}_
+
+_Last Updated: {docdatetime}_
 
 == Meta-Documentation
 This section provides a brief overview of the Yaktor reference documentation itself.
@@ -43,10 +47,11 @@ or on the Yaktor docs site at http://yaktor.io.
 === Getting help
 If you need help with Yaktor, it's available.
 
-* Try the FAQs (TODO) for answers to the most common questions.
+* Try the link:faq{outfilesuffix}[Yaktor FAQs] for answers to the most common questions.
 * Ask questions with the tag `yaktor` on {stackoverflow}.
-* Discuss Yaktor at {gitter}.
-(Yaktor committer hours vary but are generally U.S. business hours.)
+* Discuss Yaktor at link:https://gitter.im/SciSpike/yaktor[our Yaktor Gitter room^].
+Yaktor committer hours vary but are generally U.S. business hours.
+* Contact Yaktor's primary sponsor, link:http://www.scispike.com/yaktor[SciSpike^], for training, consulting, or custom software development.
 
 === First steps
 * <<requirements>> | <<installation>>
@@ -58,13 +63,13 @@ Ready to start working with Yaktor? Then <<writing-code,write some code>>!
 == Getting Started
 This section aims to quickly get you up & running with Yaktor using its {nodejs} mapping.
 
-=== tl;dr
+=== tl;dr (using Node.js)
 
-Install {docker} 1.11 or later, then create a new or work on an existing Yaktor application.
+Install {docker} 1.11 or later, then create a new Yaktor application or work on an existing one.
 
 [cols="2", options="header"]
 |===
-^| New Application ^| Existing Application
+^| New Yaktor Application ^| Existing Yaktor Application
 
 a|
 [source,sh,options="nowrap",subs="attributes+"]
@@ -110,6 +115,13 @@ Yaktor leverages a feature-based design.
 The Yaktor team has authored features that can be added to existing Yaktor-based applications.
 For example, if your Yaktor {nodejs} application needs authentication & authorization, you can use link:https://github.com/SciSpike/yaktor-auth[`yaktor-auth`] to add those features.
 Other development teams can add other Yaktor features as well.
+
+==== What can Yaktor do?
+Here's a quick hit list of some of the cool things Yaktor can do.  With Yaktor, you can
+
+* build applications easily that leverage interoperating state machines,
+* create & secure REST endpoints with a trivial amount of effort, and
+* effortlessly generate thorough application documentation, including state transition diagrams.
 
 === Requirements
 There are two ways that you can run Yaktor applications:
@@ -299,7 +311,7 @@ The key point here is that the _state of your business data_ is described by Yak
 
 IMPORTANT: Yaktor domain models are optional; you can author Yaktor applications with no underlying entities if you so choose.
 
-NOTE: For more information on Yaktor's domain modeling DSL, see <<yaktor-domain-model-dsl-reference>>.
+NOTE: For more information on Yaktor's domain modeling DSL, see the link:dsl/domain/index{outfilesuffix}[Domain Model DSL Reference].
 
 ==== Yaktor conversation DSL
 In a Yaktor-based application, much (but not necessarily _all_) of the application's behavior is manifested conceptually as _conversations_.
@@ -309,7 +321,7 @@ The key point here is that the _behavior_ of your application is described prima
 For now, just know that the conversation DSL provides for the specification of a collection of _types_, _endpoints_ (like REST endpoints), and _agents_.
 Agents may have _state machines_ and may source & sink _events_.
 
-NOTE: For more information on Yaktor's conversation DSL, see <<yaktor-conversation-dsl-reference>>.
+NOTE: For more information on Yaktor's conversation DSL, see the link:dsl/domain/index{outfilesuffix}[Conversation DSL Reference].
 
 === Technology-specific mappings
 Since Yaktor is based on technology-agnostic, declarative DSLs, it needs to eventually _do_ something.

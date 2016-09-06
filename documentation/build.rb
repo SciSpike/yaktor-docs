@@ -31,7 +31,6 @@ Dir.glob(src+"/**/*.adoc") {
     "-D",dest,
     "-a","docinfo1",
     "-a","source-highlighter=prettify",
-    "-a","toc2",
     "-a","idprefix=",
     "-a","idseparator=-",
     "-a","sectanchors",
