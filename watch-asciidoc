@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+nodemon -w reference -e adoc,css -x "docker run --rm -v $PWD:/app -w /app yaktor/node:0.39.0 bash -c ./build.rb"

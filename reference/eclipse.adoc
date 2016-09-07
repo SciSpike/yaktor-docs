@@ -1,0 +1,68 @@
+= Yaktor Eclipse Plugin
+
+== Introduction
+
+This section explains how to install the Yaktor plugin for Eclipse.
+
+The Yaktor Eclipse Plugin for Node.js includes
+
+* intelligent editors for the Yaktor domain model & conversation DSLs, and
+* builders that generate Node.js mappings based on your DSL code.
+
+These editors may help you be more productive when using Yaktor.
+The editor supports features such as
+
+* syntax highlighting,
+* continuous source analysis with error markers,
+* autocompletion,
+* document outlines, and
+* click-through navigation to referenced elements.
+
+== tl;dr
+* Install Eclipse from http://www.eclipse.org.
+* Install Xtext from https://eclipse.org/Xtext/download.html.
+* Install the Yaktor Eclipse Plugin from http://yaktor.io/eclipse.
+* Restart Eclipse.
+* `File` -> `Import` -> `General` -> `Existing Projects into Workspace`
+* Select directory of Yaktor-based application
+* Edit project files
+
+== Installation
+
+=== Download Eclipse
+The first thing to do is to download a recent version of Eclipse that fits your needs.
+Pretty much any version of Eclipse will do.
+
+We would recommend perhaps downloading one of the versions that supports JavaScript development.
+However, you may also download any of the other versions and then extend it later.
+
+You can find all the eclipse versions at http://www.eclipse.org.
+
+=== Ensure Xtext Eclipse plugins are installed
+We depend on Xtext & Xtend plugins that are not available in all Eclipse versions.
+If you don't already have Xtext (or you aren't sure), install Xtext from https://eclipse.org/Xtext/download.html.
+
+=== Add the Yaktor Plugin
+Yaktor provides a set of features that can be added to Eclipse.
+Eclipse allows us to do this through what they call an update site.
+
+For Eclipse to find our features, you’ll have to add the Yaktor Update Site to the places where Eclipse searches for features.
+
+The way to add an update site varies slightly from platform to platform, so to make sure we’re current, we suggest you simply search for link:https://duckduckgo.com/?q=how+to+add+an+update+site+to+Eclipse["how to add an update site to Eclipse"].
+
+The update site for Yaktor is http://yaktor.io/eclipse.
+
+=== Try it out
+If you succeeded installing the plugin, you should now be able to import one of your projects and try out the editors.
+
+The easiest way to get started is to take one of your project and import them by using the following steps:
+
+. Select `File`
+. Select `Import`
+. Expand `General`
+. Select `Existing Projects into Workspace`
+. Click `Next`
+. Browse to the directory where you have your Yaktor project
+. Click `Finish`
+
+You should now be able to open the `.yc` and `.ydm` files using the Yaktor editors.

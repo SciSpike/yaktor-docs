@@ -4,3 +4,4 @@
 .classpath
 *.html
 node_modules
+out/

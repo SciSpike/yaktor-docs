@@ -1,0 +1,10 @@
+= Docker
+
+== Introduction
+The easiest way to use Yaktor is via link:http://www.docker.com[Docker].
+That way, you don't have to install any of Yaktor's dependencies directly; they're already there in the link:https://hub.docker.com/r/yaktor/node/[Yaktor Docker Node.js image^].
+
+== Installation
+Install link:http://www.docker.com[Docker^].
+We officially support Docker 1.11 or later.
+They have dandy link:https://www.docker.com/products/docker[installation instructions^] and link:https://www.docker.com/docker-support-services[support^].

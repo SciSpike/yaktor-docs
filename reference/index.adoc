@@ -9,6 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :sectlinks:
 :sectnums:
 :sectnumlevels: 6
+:icons: font
 :yaktorNodeDockerTag: latest
 :nodejs: link:http://nodejs.org[Node.js^]
 :springroo: link:http://projects.spring.io/spring-roo[Spring Roo^]
@@ -36,13 +37,13 @@ _Version: {docVersion}_
 
 _Last Updated: {docdatetime}_
 
-== Meta-Documentation
-This section provides a brief overview of the Yaktor reference documentation itself.
+== Meta
+This section provides a brief overview of this Yaktor Reference Guide.
 
 === About
 This reference guide is available in source form in Github at
-https://github.com/SciSpike/yaktor-docs/blob/master/documentation/src/asciidoc/reference/index.adoc
-or on the Yaktor docs site at http://yaktor.io.
+https://github.com/SciSpike/yaktor-docs/blob/master/reference/index.adoc
+or on the Yaktor docs site at http://docs.yaktor.io.
 
 === Getting help
 If you need help with Yaktor, it's available.
@@ -274,6 +275,8 @@ $ npm run start
 
 At this point, you are ready to begin editing your Yaktor application.  It's crucial that you understand <<yaktor-domain-specific-languages,Yaktor's DSLs>> and <<technology-specific-mappings,technology mappings>>, so make sure you <<yaktor-domain-specific-languages,check them out>>.
 
+include::sample.adoc[leveloffset=1]
+
 == Overview of Yaktor Domain-Specific Languages & Technology Mappings
 This section only describes the high-level concepts behind a Yaktor application.
 For a comprehensive treatment, see XXX.
@@ -421,3 +424,10 @@ TODO: complete description of the Node.js directory structure, including generat
 
 ==== Code customization
 TODO: complete description of the gap pattern & its implementation in the Node.js mapping.
+
+== Appendix
+
+=== Tooling
+include::eclipse.adoc[leveloffset=3]
+
+include::docker.adoc[leveloffset=3]
