@@ -1,0 +1,41 @@
+= Yaktor Documentation Repo
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:toc: left
+:toclevels: 4
+:idprefix:
+:idseparator: -
+:sectanchors:
+:sectlinks:
+:sectnums:
+:sectnumlevels: 6
+:icons: font
+
+== tl;dr
+See link:reference/index{outfilesuffix}.
+
+== About
+This repository contains the documentation for Yaktor, a scalable, event-driven, agent-based rapid development platform.
+
+The documentation entry point is link:reference/index{outfilesuffix}.
+
+== Authoring
+It's not terribly difficult to author documentation here.  Understand the <<directory-structure, directory structure>>, then read how to <<building,build the docs>>.
+
+=== Directory structure
+
+* `reference`: This is the entrypoint to the documentation.  Most things are reachable from here, so that's where you should start.
+
+* `out`: This is where the static HTML is written by `asciidoctor`.
+(It's ignored by `git`.)
+
+* `attic`: This is old stuff that either needs to be removed, or needs to be updated and brought into the main documentation tree rooted in `reference`.
+
+=== Building
+This repo is built via `asciidoctor`.  Instead of installing all of its dependencies, you can just use Docker from the root of this repository:
+
+[source,sh]
+----
+$ docker run --rm -v $PWD:/app -w /app yaktor/node:0.39.0 bash -c ./build.rb`
+----
+
+If you want to author this documentation and continuously generate it on changes, you can either use the `watch-asciidoc` script in the repo root directory, which requires `nodemon` to be installed, or you can spin up your own filesystem watcher and invoke the `docker` command above yourself.  Up to you.

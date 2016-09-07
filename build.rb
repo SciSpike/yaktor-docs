@@ -24,7 +24,7 @@ Dir.glob(src+"/**/*.adoc") {
     "-D",destDir.to_s,
     "-a","source-highlighter=prettify",
     "-a","linkcss",
-    "-a","stylesheet=" + relDest + "/stylesheets/asciidoctor.css",
+    "-a","stylesheet=" + relDest + "/stylesheets/yaktor.css",
     file ]
   Asciidoctor::Cli::Invoker.new(*arr).invoke!
 }
