@@ -1,11 +1,18 @@
 sudo: required
-
 services:
-  - docker
-
+- docker
 before_install:
-  - env | grep TRAVIS > .env
-  - docker pull yaktor/node:0.39.0
-
+- env | grep TRAVIS > .env
+- docker pull yaktor/node:0.39.0
 script:
-  - docker run --rm -v $PWD:/app -w /app yaktor/node:0.39.0 bash -c ./build.rb
+- docker run --rm -v $PWD:/app -w /app yaktor/node:0.39.0 bash -c ./build.rb
+deploy:
+  provider: s3
+  access_key_id:
+    secure: dFMXlJyWk7RmfUDTkvX/bghOc04T9b2+r99J8vbUFqLzXTJ4e1nsGdG1yeRbiqntBa8k0Y6ULElGjuoPutbVhfTSbFW8XS0GpjyISolWPNlrSs6Iw27+TdpI5fZ2uJUzaZHbIfLwjmUAdNtElZsXocKHXJDNxDcHUzKYnv8ZGD/c34oRMcAtZ+fc3SuMlCi4v3cPsp75bv+dlvN3pecqVccir5nsyaSxMSWsTp5TBGUs6ilweP3M5YOw5/q4VIAcEGQ/zshijYNpBLof04gcgEQJk3C47zDU2s4I8TnmFsWL+uygNEEs0OkqAGOz4c0c0bJkHVyIxCPxCJeFW44iVqvCRF/s66u6FEtLOxfKYT77m1vf+t4UIeeDzxW2MR8oUAQb+SVzbaDUrL0ylrOFWheSRP1+Kuw6Fr4/yg2/O2yUhwG0FIRfhHPrezMn9Cpi6AKS89uolcMM5Doa7a79Mn9BbE9s2MH4lwpvBuf97ZtN9YtXTmGV4B1h8btPiTKpGO3SgxzT8HbeRRqVqkSgpBkWd8ZRBiDIrgJUjooKK5bzhGdFEdaXo65jRUJV0Dak7x9AW4Suy4k21BoX4XNPiSN5joGuSO3tewKnOHPWo58al5xgh0gC88Y5APaTLtS0LxBw9cjZqVFoLAJjSPau0WxFqgjNvuo85lwBiqX/fYU=
+  secret_access_key:
+    secure: Y3L61cYb4qZEsjP1nP0UFg1B/mswO+4JRQik+Hxg6homgnoOxIOhFBE6ev5fSw2bkdfEPO0qikdDjtXsAbY0Gn97Ti65h5+Azt3YmGI6VakAzZs5FT0mcJ2VGGxeEssSj/M09M60bwEfuGjh8wUO9gAU7oFwjSrLvhz2ABHnl99Jf0G2DZypU9bVMDjaSBBJahPL8M+HSfG6HoF9KgWwS3A9c61jfVoTnkxtBHwcswNf9ydD76R967LsZ6RzbJzcKYkAnD45aWMb8+4H8wYkbGT0PBsqAlmHm8u/Ql7oZCJkFAifaW1tawKnsYGviiqHemQywUXrp4Wt041AZpYqScNOszwkdEQJfApQLjJDgnagNCv4cvO8zqnfFvRzjcXZkEi3KWtnOgOJ/dHIY1+etIFrmMN49Es7UlBn4EBWWf0h7Zo1k4Vt5h+siaLbFC3BcH+J7RstS2Rlh29b8r6J7Ll1u/iGIcU9SPTAZpbrJJzEiaE1ruXU6pVw3Ex/nuCv1RvmWwxGCyjSHnutaCFuwJuFU8VlsOReMAQrYOPYR86l8aAMCQEoEI9WDvDyVyYpVSVq4VQYrAxEv25zPxPGnjo8Gz/kg1RkhqzK2DEH98JyYjx0WGAgIjyKg+KP3HaaK6dGcoGxZpTJmqovjqqGvxzyPVt2S9dfFPqxGlbagxI=
+  bucket: "docs.yaktor.io"
+  skip_cleanup: true
+  acl: public_read
+  local_dir: out
