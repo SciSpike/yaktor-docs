@@ -11,12 +11,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :icons: font
 
 == tl;dr
-See link:reference/index{outfilesuffix}.
+See link:reference/index{outfilesuffix}[].
 
 == About
 This repository contains the documentation for Yaktor, a scalable, event-driven, agent-based rapid development platform.
 
-The documentation entry point is link:reference/index{outfilesuffix}.
+The documentation entry point is link:reference/index{outfilesuffix}[].
 
 == Authoring
 It's not terribly difficult to author documentation here.  Understand the <<directory-structure, directory structure>>, then read how to <<building,build the docs>>.
@@ -31,7 +31,7 @@ It's not terribly difficult to author documentation here.  Understand the <<dire
 * `attic`: This is old stuff that either needs to be removed, or needs to be updated and brought into the main documentation tree rooted in `reference`.
 
 === Building
-This repo is built via `asciidoctor`.  Instead of installing all of its dependencies, you can just use Docker from the root of this repository:
+This repo is built via `asciidoctor`.  Instead of installing it & all of its dependencies, you can just use Docker from the root of this repository:
 
 [source,sh]
 ----
