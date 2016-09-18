@@ -687,7 +687,6 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 .conum:not([data-value]):empty { display: none; }
 
 #toc {
-  background: #f8f8f7;
   background: whitesmoke;
 }
 
