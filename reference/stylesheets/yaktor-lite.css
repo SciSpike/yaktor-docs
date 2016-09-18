@@ -692,11 +692,11 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 }
 
 /*#content {*/
-/*background: url('../images/logo-with-text-10.png') no-repeat center 55% fixed;*/
-/*-moz-background-size: 35%;*/
-/*-webkit-background-size: 35%;*/
-/*-o-background-size: 35%;*/
-/*background-size: 35%;*/
+  /*background: url('../images/logo-with-text-10.png') no-repeat center 55% fixed;*/
+  /*-moz-background-size: 35%;*/
+  /*-webkit-background-size: 35%;*/
+  /*-o-background-size: 35%;*/
+  /*background-size: 35%;*/
 /*}*/
 body {
   background: url('../images/logo-10.png') no-repeat center center fixed;
