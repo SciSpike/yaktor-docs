@@ -50,7 +50,7 @@ For Eclipse to find our features, you’ll have to add the Yaktor Update Site to
 
 The way to add an update site varies slightly from platform to platform, so to make sure we’re current, we suggest you simply search for link:https://duckduckgo.com/?q=how+to+add+an+update+site+to+Eclipse["how to add an update site to Eclipse"].
 
-The update site for Yaktor is http://yaktor.io/eclipse.
+The update site for Yaktor is http://eclipse.yaktor.io.
 
 === Try it out
 If you succeeded installing the plugin, you should now be able to import one of your projects and try out the editors.

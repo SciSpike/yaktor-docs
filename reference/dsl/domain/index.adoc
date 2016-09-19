@@ -64,7 +64,7 @@ The domain model is defined in a simple text file that conforms to a set of gram
 Yaktor domain model files can have any extension, but the preferred extension is `.ydm`.
 
 TIP: Although you may use any text editor you prefer to edit this file, the Yaktor team strongly recommends that you use the editor provided by Yaktor.
-It is provided as an eclipse plugin, available at http://yaktor.io/eclipse.
+It is provided as an eclipse plugin, available at http://eclipse.yaktor.io.
 
 The editor will parse the file interactively and mark any errors you may have.
 It also provides autocompletion, syntax highlighting, and an outline view, which are quite useful.
