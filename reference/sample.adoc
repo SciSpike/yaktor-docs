@@ -21,7 +21,7 @@ For now, we'll just say that this command generates:
 * The Node.js code required to execute the agents' behaviors
 * Visualization of the language files
 
-Because we'll only explain the demo file in this article, we'll focus on what is generated from the `*.ycl` files, AKA "Yaktor conversation" files.
+Because we'll only explain the demo file in this article, we'll focus on what is generated from the `*.yc` files, AKA "Yaktor conversation" files.
 
 === `gen-views`
 The `gen-views` command is used to generate user interfaces.
