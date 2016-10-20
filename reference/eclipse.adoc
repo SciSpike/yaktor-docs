@@ -21,7 +21,7 @@ The editor supports features such as
 == tl;dr
 * Install Eclipse from http://www.eclipse.org.
 * Install Xtext from https://eclipse.org/Xtext/download.html.
-* Install the Yaktor Eclipse Plugin from http://yaktor.io/eclipse.
+* Install the Yaktor Eclipse Plugin from http://eclipse.yaktor.io.
 * Restart Eclipse.
 * `File` -> `Import` -> `General` -> `Existing Projects into Workspace`
 * Select directory of Yaktor-based application
