@@ -14,7 +14,7 @@ Our `agent` is very similar to the {actormodel}’s `actor`.
 
 So why did we not use the keyword `actor` instead of `agent`?
 We’ve had numerous discussions around this topic.
-Basically, we concluded that they are different enought to merit a separation.
+Basically, we concluded that they are different enough to merit a separation.
 
 Here are some of the differences between an `actor` & and our `agent`:
 
