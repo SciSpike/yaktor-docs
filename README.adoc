@@ -35,7 +35,7 @@ This repo is built via `asciidoctor`.  Instead of installing it & all of its dep
 
 [source,sh]
 ----
-$ docker run --rm -v $PWD:/app -w /app yaktor/node:0.39.0 bash -c ./build.rb`
+$ docker run --rm -v $PWD:/app -w /app yaktor/node:0.39.0 bash -c ./build.rb
 ----
 
 If you want to author this documentation and continuously generate it on changes, you can either use the `watch-asciidoc` script in the repo root directory, which requires `nodemon` to be installed, or you can spin up your own filesystem watcher and invoke the `docker` command above yourself.  Up to you.
