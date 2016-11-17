@@ -127,4 +127,4 @@ It originally came from "yet another actor model", but neither "Yaactor" nor "Ya
 Then, we did a search for the name "Yaktor" and discovered that is was, conveniently, quite unique.
 
 We also went around & around since we're using _agents_, not _actors_, but eventually decided not to change it because "Yagent" looked & sounded dumb, and we already decided that we were going to go with a link:https://en.wikipedia.org/wiki/Yak[yak] as our spirit animal, because link:http://www.irishexaminer.com/examviral/technology-and-gaming/apple-started-talking-about-yaks-at-its-iphone-se-launch-event-and-excitement-went-through-the-roof-388694.html[who doesn't like yaks], right?
-Oh yeah, and we had already paid a graphic artist to come up with our link:images/logo-with-text.png[yak-based logo]. :)
+Oh yeah, and we had already paid a graphic artist to come up with our link:./images/logo-with-text.png[yak-based logo]. :)
