@@ -176,11 +176,8 @@ If you're running natively, see <<new-native-yaktor-application>>.
 ----
 $ mkdir myapp                                   <1>
 $ cd myapp                                      <2>
-$ docker run -it --rm --user node \
-  -v "$PWD":/app --entrypoint bash \
-  yaktor/node:{yaktorNodeDockerTag} -c \
-  'npm install yaktor && $(npm bin)/yaktor init' <3>
-$ ./yak gen-src gen-views                        <4>
+$ curl init.yaktor.io \| sh                      <3>
+$ ./yak gen-src gen-views                       <4>
 ----
 <1> Create a directory to hold your Yaktor application.
 <2> Change into the Yaktor application directory.
