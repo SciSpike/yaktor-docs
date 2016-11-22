@@ -60,7 +60,7 @@ conversation demo {
    * The Circuit is what we call a `conversation type`. 
    * Agents collaborate over the same instance of an object; here, the object is an instance of a Circuit.
    */
-  type Circuit {
+  message Circuit {
     String name!
   }
 
@@ -68,7 +68,6 @@ conversation demo {
    * A simple switch agent
    */
   infinite agent Switch concerning Circuit {
-    privately receives flip
     sends turnOn
     sends turnOff
 
@@ -158,15 +157,9 @@ The agent `Switch` defines the following events:
 
 [source,yc]
 ----
-privately receives flip
 sends turnOn
 sends turnOf
 ----
-
-`privately receives` simply means that the agent (or its user-agent, like a UI) will internally produce and consume the event; it will never be visible to other agents in the conversation.
-This makes sense for `flip`, as the switch does not expect to receive this event from any other agent.
-We could, for instance, imagine that we'll build a mobile app with a button labeled `Flip`.
-This mobile app would act as a user-agent to for the agent `Switch`.
 
 `sends` means that the agent produces an event that itself or other agents reacts to.
 The switch sends two events, `turnOn` and `turnOff`.
@@ -192,12 +185,16 @@ on {
 
 In other words, we're saying "if an instance of the agent `Switch` is in the state `on` and it receives the event `flip`, it changes state to `off` and sends the event `turnOff`".
 
+`flip` is an event that the agent or its user-agent (like a UI), will internally produce and consume; it will never be visible to other agents in the conversation.
+This makes sense for `flip`, as the switch does not expect to receive this event from any other agent.
+We could, for instance, imagine that we'll build a mobile app with a button labeled `Flip`.
+This mobile app would act as a user-agent to for the agent `Switch`.
+
 Now, let's look at the complete agent definition again:
 
 [source,yc]
 ----
 infinite agent Switch concerning Circuit {
-  privately receives flip
   sends turnOn
   sends turnOff
 
@@ -254,11 +251,13 @@ You can do them all with this command:
 $ ./yak gen-src gen-views start
 ----
 
-If you're on Linux, your app should be available at
+NOTE: The first time you run `gen-views` might take some time.
+
+If you're on Mac OS X/macOS, your app should be available at
 `http://www.<appName>.yaktor`. For example, if you named your application
 `myapp`, try `http://www.myapp.yaktor`.
 
-If that doesn't work, it will display the IP of the running application in the console log.
+If that doesn't work, you will see the IP of the running application in the console log.
 With Docker, it would typically be something like 172.x.x.x.
 Without Docker, it'll probably be `http://localhost:3000`.
 
