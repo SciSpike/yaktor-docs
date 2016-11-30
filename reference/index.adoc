@@ -76,7 +76,7 @@ a|
 [source,sh,options="nowrap"]
 ----
 $ mkdir myapp && cd myapp        <1>
-$ curl init.yaktor.io \| sh       <2>
+$ curl https://init.yaktor.io \| sh       <2>
 $ ./yak gen-src gen-views start  <3>
 ----
 <1> Create & change into new app directory
@@ -176,7 +176,7 @@ If you're running natively, see <<new-native-yaktor-application>>.
 ----
 $ mkdir myapp                                   <1>
 $ cd myapp                                      <2>
-$ curl init.yaktor.io \| sh                      <3>
+$ curl https://init.yaktor.io \| sh                      <3>
 $ ./yak gen-src gen-views                       <4>
 ----
 <1> Create a directory to hold your Yaktor application.
