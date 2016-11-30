@@ -11,22 +11,22 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :sectnumlevels: 6
 :icons: font
 :yaktorNodeDockerTag: latest
-:nodejs: link:http://nodejs.org[Node.js^]
-:springroo: link:http://projects.spring.io/spring-roo[Spring Roo^]
+:nodejs: link:https://nodejs.org[Node.js^]
+:springroo: link:https://projects.spring.io/spring-roo[Spring Roo^]
 :docker: link:https://www.docker.com[Docker^]
-:stackoverflow: link:http://stackoverflow.com/questions/tagged/yaktor[Stack Overflow^]
-:spring: link:http://spring.io[Spring^]
-:npm: link:http://npmjs.org[npm^]
+:stackoverflow: link:https://stackoverflow.com/questions/tagged/yaktor[Stack Overflow^]
+:spring: link:https://spring.io[Spring^]
+:npm: link:https://npmjs.org[npm^]
 :mongodb: link:https://www.mongodb.com[MongoDB^]
-:cassandra: link:http://cassandra.apache.org[Cassandra^]
-:eclipseplugin: link:http://eclipse.yaktor.io[eclipse plugin^]
-:javascript: link:http://www.ecma-international.org/publications/standards/Ecma-262.htm[JavaScript^]
-:express: link:http://expressjs.com[Express^]
+:cassandra: link:https://cassandra.apache.org[Cassandra^]
+:eclipseplugin: link:https://eclipse.yaktor.io[eclipse plugin^]
+:javascript: link:https://www.ecma-international.org/publications/standards/Ecma-262.htm[JavaScript^]
+:express: link:https://expressjs.com[Express^]
 :mongoose: link:http://mongoosejs.com/[Mongoose^]
-:springboot: link:http://spring.io/projects/spring-boot[Spring Boot^]
+:springboot: link:https://spring.io/projects/spring-boot[Spring Boot^]
 :akka: link:http://akka.io[Akka^]
-:scala: link:http://scala-lang.org[Scala^]
-:java: link:http://www.java.com[Java^]
+:scala: link:https://www.scala-lang.org[Scala^]
+:java: link:https://www.java.com[Java^]
 :passportjs: link:http://passportjs.org[Passport^]
 
 *Authors*
@@ -43,7 +43,7 @@ This section provides a brief overview of this Yaktor Reference Guide.
 === About
 This reference guide is available in source form in Github at
 https://github.com/SciSpike/yaktor-docs/blob/master/reference/index.adoc
-or on the Yaktor docs site at http://docs.yaktor.io.
+or on the Yaktor docs site at https://docs.yaktor.io.
 
 === Getting help
 If you need help with Yaktor, it's available.

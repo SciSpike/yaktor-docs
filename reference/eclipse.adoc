@@ -19,9 +19,9 @@ The editor supports features such as
 * click-through navigation to referenced elements.
 
 == tl;dr
-* Install Eclipse from http://www.eclipse.org.
+* Install Eclipse from https://www.eclipse.org.
 * Install Xtext from https://eclipse.org/Xtext/download.html.
-* Install the Yaktor Eclipse Plugin from http://eclipse.yaktor.io.
+* Install the Yaktor Eclipse Plugin from https://eclipse.yaktor.io.
 * Restart Eclipse.
 * `File` -> `Import` -> `General` -> `Existing Projects into Workspace`
 * Select directory of Yaktor-based application
@@ -36,7 +36,7 @@ Pretty much any version of Eclipse will do.
 We would recommend perhaps downloading one of the versions that supports JavaScript development.
 However, you may also download any of the other versions and then extend it later.
 
-You can find all the eclipse versions at http://www.eclipse.org.
+You can find all the eclipse versions at https://www.eclipse.org.
 
 === Ensure Xtext Eclipse plugins are installed
 We depend on Xtext & Xtend plugins that are not available in all Eclipse versions.
@@ -50,7 +50,7 @@ For Eclipse to find our features, you’ll have to add the Yaktor Update Site to
 
 The way to add an update site varies slightly from platform to platform, so to make sure we’re current, we suggest you simply search for link:https://duckduckgo.com/?q=how+to+add+an+update+site+to+Eclipse["how to add an update site to Eclipse"].
 
-The update site for Yaktor is http://eclipse.yaktor.io.
+The update site for Yaktor is https://eclipse.yaktor.io.
 
 === Try it out
 If you succeeded installing the plugin, you should now be able to import one of your projects and try out the editors.

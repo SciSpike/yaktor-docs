@@ -91,9 +91,9 @@ connecting to: test
 Welcome to the MongoDB shell.
 For interactive help, type "help".
 For more comprehensive documentation, see
-       	http://docs.mongodb.org/
+       	https://docs.mongodb.com/
 Questions? Try the support group
-       	http://groups.google.com/group/mongodb-user
+       	https://groups.google.com/group/mongodb-user
 >
 ----
 
@@ -126,5 +126,5 @@ The name "Yaktor" has a couple of motivations.
 It originally came from "yet another actor model", but neither "Yaactor" nor "Yactor" looked quite right or we figured people would spell it wrong, so we went with one "a" & changed the "c" to a "k" (after *much* inane discussion).
 Then, we did a search for the name "Yaktor" and discovered that is was, conveniently, quite unique.
 
-We also went around & around since we're using _agents_, not _actors_, but eventually decided not to change it because "Yagent" looked & sounded dumb, and we already decided that we were going to go with a link:https://en.wikipedia.org/wiki/Yak[yak] as our spirit animal, because link:http://www.irishexaminer.com/examviral/technology-and-gaming/apple-started-talking-about-yaks-at-its-iphone-se-launch-event-and-excitement-went-through-the-roof-388694.html[who doesn't like yaks], right?
+We also went around & around since we're using _agents_, not _actors_, but eventually decided not to change it because "Yagent" looked & sounded dumb, and we already decided that we were going to go with a link:https://en.wikipedia.org/wiki/Yak[yak] as our spirit animal, because link:https://www.irishexaminer.com/examviral/technology-and-gaming/apple-started-talking-about-yaks-at-its-iphone-se-launch-event-and-excitement-went-through-the-roof-388694.html[who doesn't like yaks], right?
 Oh yeah, and we had already paid a graphic artist to come up with our yak-based logo. :)
