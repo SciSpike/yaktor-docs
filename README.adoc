@@ -10,6 +10,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :sectnumlevels: 6
 :icons: font
 
+NOTE: Please report issues at https://github.com/SciSpike/yaktor-issues/issues.
+
 == tl;dr
 See link:reference/index{outfilesuffix}[].
 
