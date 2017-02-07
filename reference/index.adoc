@@ -96,7 +96,8 @@ $ ./yak gen-src gen-views start  <3>
 |===
 
 To see the generated application UI, if you're using Mac OS X or macOS, open http://www.myapp.yaktor in a browser.
-If you're on Windows or Linux, see the URL in the server console's log for the IP address to connect to.
+
+If you're on Windows or Linux, open http://localhost:8888 or see the URL in the server console's log for the IP address to connect to.
 
 === Introducing Yaktor
 Yaktor is a tool to assist in the rapid creation of highly scalable, event-driven, agent-based applications.
